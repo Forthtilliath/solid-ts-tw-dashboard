@@ -1,26 +1,61 @@
-import IoGameControllerSharp from "../Icons";
+import {
+  AiFillDashboard,
+  FaSolidGamepad,
+  FaSolidUser,
+  FaSolidUserGroup,
+  IoGameControllerSharp,
+  IoNewspaperSharp,
+  RiFinanceMoneyEuroBoxFill,
+} from "~/components/Icons";
 import { NavItem } from "./NavItem";
 
 export function Navigation() {
+  const size = "2em";
   return (
-    <nav class="flex-grow">
-      <ul class="flex flex-col gap-2 p-3 text-gray-200">
+    <div class="w-full px-2">
+      <div class="flex flex-col items-center w-full mt-3 border-t border-gray-700">
         <NavItem
           label="Dashboard"
           path="/admin/dashboard"
-          icon={<IoGameControllerSharp size={"1.5em"} />}
+          icon={<AiFillDashboard size={size} />}
+        />
+      </div>
+
+      <div class="flex flex-col items-center w-full mt-3 border-t border-gray-700">
+        <NavItem
+          label="Gestion des actualités"
+          path="/admin/management/news"
+          icon={<IoNewspaperSharp size={size} />}
         />
         <NavItem
-          label="Liste des jeux"
-          path="/"
-          icon={<IoGameControllerSharp size={"1.5em"} />}
+          label="Gestion des jeux"
+          path="/admin/management/game"
+          icon={<FaSolidGamepad size={size} />}
         />
         <NavItem
-          label="About"
-          path="/about"
-          icon={<IoGameControllerSharp size={"1.5em"} />}
+          label="Gestion des joueurs"
+          path="/admin/management/player"
+          icon={<FaSolidUser size={size} />}
         />
-      </ul>
-    </nav>
+      </div>
+
+      <div class="flex flex-col items-center w-full mt-3 border-t border-gray-700">
+        <NavItem
+          label="Stats des jeux"
+          path="/admin/stats/game"
+          icon={<IoGameControllerSharp size={size} />}
+        />
+        <NavItem
+          label="Stats des joueurs"
+          path="/admin/stats/player"
+          icon={<FaSolidUserGroup size={size} />}
+        />
+        <NavItem
+          label="Stats des revenus"
+          path="/admin/stats/income"
+          icon={<RiFinanceMoneyEuroBoxFill size={size} />}
+        />
+      </div>
+    </div>
   );
 }

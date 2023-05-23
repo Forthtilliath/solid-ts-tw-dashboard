@@ -13,6 +13,8 @@ import {
 } from "solid-start";
 import "./root.css";
 import { Navigation } from "./components/navigation";
+import { Sidebar } from "./components/Sidebar";
+import { MainLayout } from "./layouts/MainLayout";
 
 export default function Root() {
   return (
@@ -25,20 +27,11 @@ export default function Root() {
       <Body>
         <Suspense>
           <ErrorBoundary>
-            <div class="grid grid-cols-[256px_1fr]">
-              {/* Flex pour fixer le bouton en bas */}
-              <aside class="bg-sky-700 w-full h-screen flex flex-col">
-                <h1>LOGO</h1>
-                <Navigation />
-
-                <button class="shadow-xl mb-2 mx-2 text-slate-300">Se déconnecter</button>
-                {/*  */}
-              </aside>
-
+            <MainLayout>
               <Routes>
                 <FileRoutes />
               </Routes>
-            </div>
+            </MainLayout>
           </ErrorBoundary>
         </Suspense>
         <Scripts />

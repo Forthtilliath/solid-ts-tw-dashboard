@@ -1,4 +1,4 @@
-import { JSXElement } from "solid-js";
+import { Accessor, JSXElement, Show } from "solid-js";
 import { A, useLocation } from "solid-start";
 
 type Props = {
@@ -9,16 +9,19 @@ type Props = {
 
 export function NavItem(props: Props) {
   const location = useLocation();
-  const active = (path: string) =>
-    path == location.pathname
-      ? "border-sky-600"
-      : "border-transparent hover:border-sky-600";
+  const active = () => props.path == location.pathname;
 
   return (
-    <li class={`border-b-2 ${active(props.path)} mx-1.5 sm:mx-6`}>
-      <A href={props.path} class="flex items-center gap-2">
-        {props.icon} {props.label}
-      </A>
-    </li>
+    <a
+      class="flex items-center w-full h-12 px-3 mt-2 rounded "
+      classList={{
+        "hover:bg-gray-700 hover:text-gray-300": !active(),
+        "text-gray-200 bg-gray-700": active(),
+      }}
+      href={props.path}
+    >
+      {props.icon}
+      <span class="ml-2 text-sm font-medium">{props.label}</span>
+    </a>
   );
 }
