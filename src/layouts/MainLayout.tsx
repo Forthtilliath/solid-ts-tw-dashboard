@@ -1,6 +1,6 @@
 import { ParentProps } from "solid-js";
-import { Sidebar } from "~/components/Sidebar";
-import { BottomNavigation } from "~/components/navigation/BottomNavigation";
+import { Sidebar } from "~/components/sidebar/Sidebar";
+import { BottomNavigation } from "~/components/bottom/BottomNavigation";
 
 export function MainLayout(props: ParentProps) {
   return (

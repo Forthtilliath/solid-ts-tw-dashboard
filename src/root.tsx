@@ -12,8 +12,8 @@ import {
   Title,
 } from "solid-start";
 import "./root.css";
-import { Navigation } from "./components/navigation";
-import { Sidebar } from "./components/Sidebar";
+import { Navigation } from "./components/sidebar";
+import { Sidebar } from "./components/sidebar/Sidebar";
 import { MainLayout } from "./layouts/MainLayout";
 
 export default function Root() {

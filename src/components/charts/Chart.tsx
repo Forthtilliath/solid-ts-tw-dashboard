@@ -18,7 +18,7 @@ const Chart = () => {
   ]);
 
   return (
-    <SolidApexCharts width="500" type="bar" options={options} series={series} />
+    <SolidApexCharts width="100%" type="bar" options={options} series={series} />
   );
 };
 

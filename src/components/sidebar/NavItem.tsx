@@ -1,5 +1,5 @@
-import { Accessor, JSXElement, Show } from "solid-js";
-import { A, useLocation } from "solid-start";
+import { JSXElement } from "solid-js";
+import { useLocation } from "solid-start";
 
 type Props = {
   label: string;
