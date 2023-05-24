@@ -5,6 +5,6 @@ export const SolidApexCharts = unstable_clientOnly(
   () => import("~/components/charts/Chart")
 );
 
-export const PremiumPlayers = unstable_clientOnly(
-  () => import("~/components/charts/PremiumPlayers")
+export const PieChart = unstable_clientOnly(
+  () => import("~/components/charts/PieChart")
 );

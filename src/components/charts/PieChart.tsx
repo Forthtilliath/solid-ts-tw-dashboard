@@ -4,13 +4,18 @@ import { SolidApexCharts } from "solid-apexcharts";
 type ApexChartProps = Parameters<typeof SolidApexCharts>[0];
 type ApexChartOptions = ApexChartProps["options"];
 
-export default function PremiumPlayers() {
+type Props = {
+  labels: string[];
+  data: number[];
+};
+
+export default function PieChart(props: Props) {
   const [options] = createStore<ApexChartOptions>({
     chart: {
       width: 380,
       type: "pie",
     },
-    labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+    labels: props.labels,
 
     responsive: [
       {
@@ -26,7 +31,7 @@ export default function PremiumPlayers() {
       },
     ],
   });
-  const [series] = createStore([44, 55, 13, 43, 22]);
+  const [series] = createStore(props.data);
 
   return (
     <SolidApexCharts
