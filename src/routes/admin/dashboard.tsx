@@ -7,11 +7,11 @@ async function getPremiums() {
 }
 
 export default function Dashboard() {
-  const [data] = createResource<API.Premium>(getPremiums);
+  const [dataPremiums] = createResource<API.Premium>(getPremiums);
 
   return (
     <div class="max-w-sm">
-      <Show when={data()} fallback={<p>Loading...</p>}>
+      <Show when={dataPremiums()} fallback={<p>Loading...</p>}>
         {(premiums) => (
           <PieChart
             labels={Object.keys(premiums())}
