@@ -2,6 +2,12 @@
 
 https://apexcharts.com/javascript-chart-demos/
 
+## MDX 
+https://stackblitz.com/edit/github-n9s1u9-lhahvl?file=src%2Froutes%2Findex.mdx,src%2Froutes%2Fnews%2Fa.mdx
+https://blog.logrocket.com/create-next-js-mdx-blog/#writing-esm-mdx
+https://blog.openreplay.com/build-a-mdx-powered-blog-with-contentlayer-and-next/
+https://www.youtube.com/watch?v=hpSubvgSvxo
+https://www.codemotion.com/magazine/frontend/how-to-create-an-mdx-blog-in-typescript-with-next-js/
 
 ## Layout
 
@@ -22,7 +28,7 @@ https://apexcharts.com/javascript-chart-demos/
       - Player
     - Stats
       - Game
-      - Player 
+      - Player
       - Income
 
 #### PC
@@ -42,6 +48,7 @@ https://apexcharts.com/javascript-chart-demos/
   - Taux de jeux premium
 - Gestions des news
   - MDX avec comments via prisma ?
+    - Like des players
 - Liste des jeux
   - Administration du jeu : Nom, description, règles : [exemple](https://boardgamearena.com/gamepanel?game=innovation)
   - Possibilité d'activer ou non un jeu
@@ -55,9 +62,16 @@ https://apexcharts.com/javascript-chart-demos/
   - Type de jeux favoris
 - Stats liées aux joueurs
   - Diagrammes avec nombre de joueurs chaque jour
-  - Le plus de joueurs co simultanément 
+  - Le plus de joueurs co simultanément
   - Le plus de joueurs en partie simultanément
   - Nombre de nouveaux joueurs
 - Stats liées aux revenus
   - Taux de joueurs premium
   - Nombre de nouveaux abonnements jour/semaine/mois/année
+
+
+## Programmer du jour
+- [ ] Mettre en place le système des posts via MDX
+- [ ] Mettre en place la bottom navigation avec un système de double niveau (dropdown)
+- [ ] Ajouter une grille pour les graphes
+- [ ] 
