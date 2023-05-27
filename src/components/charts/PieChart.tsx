@@ -61,7 +61,7 @@ export default function PieChart(props: Props) {
   const [series] = createStore(props.data);
 
   return (
-    <>
+    <div>
       <h3 class="text-2xl text-slate-200 text-center pt-2">{props.title}</h3>
       <SolidApexCharts
         width="100%"
@@ -69,6 +69,6 @@ export default function PieChart(props: Props) {
         options={options}
         series={series}
       />
-    </>
+    </div>
   );
 }
