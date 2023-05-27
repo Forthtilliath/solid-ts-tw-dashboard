@@ -11,6 +11,7 @@ Array.from(document.querySelectorAll(".game_box_wrap")).map((element) => ({
 
 import { faker } from '@faker-js/faker';
 import { prisma } from "./db";
+import { setYear } from "../methodes/date";
 
 export async function generateData({ users = 0, histories = 0 }) {
   await createUsers(users);
@@ -27,11 +28,71 @@ function getPremiumInfos() {
   };
 }
 
+function getPlayersDate() {
+  const createdAt = faker.date.past({ years: 3 });
+  const lastConnexion = faker.date.between({ from: createdAt, to: Date.now() });
+  return { createdAt, lastConnexion };
+}
+
+(() => {
+
+  console.log("d", getBirthday());
+})();
+
+function getBirthday() {
+  return faker.helpers.weightedArrayElement([
+    {
+      weight: 26.85,
+      value: faker.date.between({
+        from: setYear(-24),
+        to: setYear(-18),
+      }),
+    },
+    {
+      weight: 32.56,
+      value: faker.date.between({
+        from: setYear(-34),
+        to: setYear(-25),
+      }),
+    },
+    {
+      weight: 35.44,
+      value: faker.date.between({
+        from: setYear(-44),
+        to: setYear(-35),
+      }),
+    },
+    {
+      weight: 10.90,
+      value: faker.date.between({
+        from: setYear(-54),
+        to: setYear(-45),
+      }),
+    },
+    {
+      weight: 7.03,
+      value: faker.date.between({
+        from: setYear(-64),
+        to: setYear(-55),
+      }),
+    },
+    {
+      weight: 4.36,
+      value: faker.date.between({
+        from: setYear(-90),
+        to: setYear(-65),
+      }),
+    },
+  ]);
+}
+
 export async function createUsers(quantity: number) {
   const users = Array.from({ length: quantity }, () => ({
     username: faker.internet.userName(),
     password: faker.internet.password(),
-    // premium: faker.datatype.boolean({ probability: 15 }),
+    gender: faker.datatype.boolean({ probability: 0.35 }) ? "female" : "male",
+    birthday: getBirthday(),
+    ...getPlayersDate(),
     ...getPremiumInfos(),
   }));
 

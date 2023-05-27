@@ -184,3 +184,75 @@ export function BsDoorOpenFill(props: Props) {
     </svg>
   );
 }
+
+export function VsGraph(props: Props) {
+  return (
+    <svg
+      fill="currentColor"
+      stroke-width="0"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      height={props.size ?? "1em"}
+      width={props.size ?? "1em"}
+      class={props.class}
+      style="overflow: visible;"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M1.5 14H15v-1H2V0H1v13.5l.5.5zM3 11.5v-8l.5-.5h2l.5.5v8l-.5.5h-2l-.5-.5zm2-.5V4H4v7h1zm6-9.5v10l.5.5h2l.5-.5v-10l-.5-.5h-2l-.5.5zm2 .5v9h-1V2h1zm-6 9.5v-6l.5-.5h2l.5.5v6l-.5.5h-2l-.5-.5zm2-.5V6H8v5h1z"
+        clip-rule="evenodd"
+      ></path>
+    </svg>
+  );
+}
+
+export function FaSolidArrowTrendDown(props: Props) {
+  return (
+    <svg
+      fill="currentColor"
+      stroke-width="0"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 576 512"
+      height={props.size ?? "1em"}
+      width={props.size ?? "1em"}
+      class={props.class}
+      style="overflow: visible;"
+    >
+      <path d="M466.7 352 320 205.3 214.6 310.6c-12.5 12.5-32.7 12.5-45.2 0L9.372 150.6c-12.496-12.5-12.496-32.7 0-45.2 12.498-12.52 32.758-12.52 45.258 0L191.1 242.7l106.3-105.3c12.5-12.5 32.7-12.5 45.2 0L512 306.7v-83.6c0-16.8 14.3-32 32-32s32 15.2 32 32V384c0 17.7-14.3 32-32 32H384c-17.7 0-32-14.3-32-32s14.3-32 32-32h82.7z"></path>
+    </svg>
+  );
+}
+
+export function FaSolidArrowTrendUp(props: Props) {
+  return (
+    <svg
+      fill="currentColor"
+      stroke-width="0"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 576 512"
+      height={props.size ?? "1em"}
+      width={props.size ?? "1em"}
+      class={props.class}
+      style="overflow: visible;"
+    >
+      <path d="M384 160c-17.7 0-32-14.3-32-32s14.3-32 32-32h160c17.7 0 32 14.3 32 32v160c0 17.7-14.3 32-32 32s-32-14.3-32-32v-82.7L342.6 374.6c-12.5 12.5-32.7 12.5-45.2 0L191.1 269.3 54.63 406.6c-12.5 12.5-32.76 12.5-45.258 0-12.496-12.5-12.496-32.7 0-45.2l160.028-160c12.5-12.5 32.7-12.5 45.2 0L320 306.7l146.7-147.6-82.7.9z"></path>
+    </svg>
+  );
+}
+
+export function AiFillDollarCircle(props: Props) {
+  return (
+    <svg
+      fill="currentColor"
+      stroke-width="0"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1024 1024"
+      height={props.size ?? "1em"}
+      width={props.size ?? "1em"}
+      class={props.class}
+      style="overflow: visible;"
+    >
+      <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm22.3 665.2.2 31.7c0 4.4-3.6 8.1-8 8.1h-28.4c-4.4 0-8-3.6-8-8v-31.4C401.3 723 359.5 672.4 355 617.4c-.4-4.7 3.3-8.7 8-8.7h46.2c3.9 0 7.3 2.8 7.9 6.6 5.1 31.7 29.8 55.4 74.1 61.3V533.9l-24.7-6.3c-52.3-12.5-102.1-45.1-102.1-112.7 0-72.9 55.4-112.1 126.2-119v-33c0-4.4 3.6-8 8-8h28.1c4.4 0 8 3.6 8 8v32.7c68.5 6.9 119.9 46.9 125.9 109.2.5 4.7-3.2 8.8-8 8.8h-44.9c-4 0-7.4-3-7.9-6.9-4-29.2-27.4-53-65.5-58.2v134.3l25.4 5.9c64.8 16 108.9 47 108.9 116.4 0 75.3-56 117.3-134.3 124.1zM426.6 410.3c0 25.4 15.7 45.1 49.5 57.3 4.7 1.9 9.4 3.4 15 5v-124c-36.9 4.7-64.5 25.4-64.5 61.7zm116.5 135.2c-2.8-.6-5.6-1.3-8.8-2.2V677c42.6-3.8 72-27.2 72-66.4 0-30.7-15.9-50.7-63.2-65.1z"></path>
+    </svg>
+  );
+}

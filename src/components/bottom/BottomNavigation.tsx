@@ -1,6 +1,6 @@
 export function BottomNavigation() {
   return (
-    <div class="block sm:hidden w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+    <div class="block md:hidden w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
       <div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
         <button
           type="button"

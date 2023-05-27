@@ -60,7 +60,6 @@ https://www.codemotion.com/magazine/frontend/how-to-create-an-mdx-blog-in-typesc
   - Possibilité de le rendre premium
 - Stats liées aux jeux
   - Jeux les plus joués : Area Spline
-  - ~~Type de jeux favoris~~
 - Stats liées aux joueurs
   - Diagrammes avec nombre de joueurs chaque jour de la semaine : Radar Basic
   - Le plus de joueurs co simultanément : Juste un nombre
@@ -78,6 +77,14 @@ https://www.codemotion.com/magazine/frontend/how-to-create-an-mdx-blog-in-typesc
     - 1 diagramme pour le mois M jusqu'à M-3
     - 1 diagramme pour le année A jusqu'à A-3
 
+- 1 graph en bar pour les données liées aux jours
+  - inscription
+  - last connexion
+
+
+- Nombre de parties en cours :
+  - SetInterval() 30s inc/dec nombre
+
 ## Programmer du jour
 
 - [ ] Mettre en place le système des posts via MDX
@@ -88,3 +95,5 @@ https://www.codemotion.com/magazine/frontend/how-to-create-an-mdx-blog-in-typesc
 
 - min height pour les graph : responsive ?
 - label radar to style
+
+(https://www.similarweb.com/website/boardgamearena.com/#geography)

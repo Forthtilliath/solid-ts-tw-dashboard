@@ -1,38 +1,44 @@
 import { createStore } from "solid-js/store";
 import { SolidApexCharts } from "solid-apexcharts";
 import { getTitle, responsive } from "./chart.options";
+import { createEffect } from "solid-js";
 
 type ApexChartProps = Parameters<typeof SolidApexCharts>[0];
 type ApexChartOptions = ApexChartProps["options"];
+type ApexChartSeries = ApexChartProps["series"];
 
 type Props = {
   title: string;
-  labels: string[];
-  data: number[];
-  colors?: string[];
+  labels?: string[];
+  data: API.LastConnexion;
+  colors?: string[] | string;
   bgColors?: string[];
   options?: ApexChartOptions;
 };
 
-export default function RadarBasicChart(props: Props) {
+export default function ColumnStacked100Chart(props: Props) {
   const [options] = createStore(
     Object.assign(
       {
         chart: {
           width: "100%",
-          type: "radar",
-        },
-        dataLabels: {
-          enabled: true,
+          type: "bar",
+          stacked: true,
+          stackType: "normal",
         },
         title: getTitle(props.title),
         colors: props.bgColors,
-        labels: props.labels,
+
         xaxis: {
-          categories: props.labels,
+          categories: ["Jours", "Mois", "Années"],
+          labels: {
+            style: {
+              colors: props.colors,
+            },
+          },
         },
         fill: {
-          opacity: 0.8,
+          opacity: 1,
         },
         yaxis: {
           show: true,
@@ -40,12 +46,22 @@ export default function RadarBasicChart(props: Props) {
           labels: {
             show: true,
             style: {
-              colors: "white",
+              colors: props.colors,
               fontSize: "12px",
               fontFamily: "Helvetica, Arial, sans-serif",
               fontWeight: 400,
             },
           },
+        },
+        legend: {
+          fontSize: "16px",
+          labels: {
+            colors: props.colors,
+          },
+          fontFamily: "",
+        },
+        theme: {
+          mode: "dark",
         },
 
         responsive,
@@ -53,12 +69,17 @@ export default function RadarBasicChart(props: Props) {
       props.options
     )
   );
-  const [series] = createStore([{ data: props.data }]);
+  const [series] = createStore<ApexChartSeries>(props.data);
+
+  createEffect(() => {
+    console.log(options);
+    console.log(series);
+  });
 
   return (
     <SolidApexCharts
       width="100%"
-      type="radar"
+      type="bar"
       options={options}
       series={series}
     />

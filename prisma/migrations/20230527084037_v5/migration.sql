@@ -14,7 +14,8 @@ CREATE TABLE "User" (
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "premium" BOOLEAN NOT NULL DEFAULT false,
-    "endPremiumAt" DATETIME
+    "endPremiumAt" DATETIME,
+    "createdAt" DATETIME NOT NULL
 );
 
 -- CreateTable

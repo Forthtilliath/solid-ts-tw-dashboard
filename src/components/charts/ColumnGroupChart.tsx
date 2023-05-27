@@ -1,38 +1,50 @@
 import { createStore } from "solid-js/store";
 import { SolidApexCharts } from "solid-apexcharts";
 import { getTitle, responsive } from "./chart.options";
+import { createEffect } from "solid-js";
 
 type ApexChartProps = Parameters<typeof SolidApexCharts>[0];
 type ApexChartOptions = ApexChartProps["options"];
 
 type Props = {
   title: string;
-  labels: string[];
-  data: number[];
+  labels?: string[];
+  data: API.LastConnexion;
   colors?: string[];
   bgColors?: string[];
   options?: ApexChartOptions;
 };
 
-export default function RadarBasicChart(props: Props) {
+export default function ColumnGroupChart(props: Props) {
   const [options] = createStore(
     Object.assign(
       {
         chart: {
           width: "100%",
-          type: "radar",
-        },
-        dataLabels: {
-          enabled: true,
+          type: "bar",
         },
         title: getTitle(props.title),
         colors: props.bgColors,
-        labels: props.labels,
+
         xaxis: {
-          categories: props.labels,
-        },
-        fill: {
-          opacity: 0.8,
+          type: "category",
+          labels: {
+            formatter: function (val) {
+              return "" + val;
+            },
+          },
+          group: {
+            style: {
+              fontSize: "10px",
+              fontWeight: 700,
+              colors: "white",
+            },
+            groups: [
+              { title: "Jour", cols: 3 },
+              { title: "Mois", cols: 3 },
+              { title: "Année", cols: 3 },
+            ],
+          },
         },
         yaxis: {
           show: true,
@@ -47,6 +59,14 @@ export default function RadarBasicChart(props: Props) {
             },
           },
         },
+        tooltip: {
+          x: {
+            formatter: function (val) {
+              return "" + val;
+              //   return "Q" + dayjs(val).quarter() + " " + dayjs(val).format("YYYY")
+            },
+          },
+        },
 
         responsive,
       } satisfies ApexChartOptions,
@@ -55,10 +75,15 @@ export default function RadarBasicChart(props: Props) {
   );
   const [series] = createStore([{ data: props.data }]);
 
+  createEffect(() => {
+    console.log(options);
+    console.log(series);
+  });
+
   return (
     <SolidApexCharts
       width="100%"
-      type="radar"
+      type="bar"
       options={options}
       series={series}
     />

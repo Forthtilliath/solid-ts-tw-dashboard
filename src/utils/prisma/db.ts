@@ -28,4 +28,5 @@ prisma.$on("query", (e) => {
   console.log("Duration: " + e.duration + "ms");
 });
 
-// generateData({ users: 200, histories: 500 });
+// generateData({ users: 300, histories: 500 });
+// generateData({ histories: 2500 });

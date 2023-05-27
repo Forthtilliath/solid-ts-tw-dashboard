@@ -17,17 +17,27 @@ export function getTitle(title: string) {
   } satisfies ApexChartTitle;
 }
 
-
 export const responsive = [
-    {
-      breakpoint: 640,
-      options: {
-        chart: {
-          height: 500,
-        },
-        legend: {
-          position: "bottom",
-        },
+  {
+    breakpoint: 640,
+    options: {
+      chart: {
+        height: 500,
+      },
+      legend: {
+        position: "bottom",
       },
     },
-  ]
+  },
+];
+
+export const defaultOptions = {
+  ...responsive,
+
+  theme: {
+    mode: "dark",
+
+  },
+};
+
+// https://apexcharts.com/docs/options/theme/

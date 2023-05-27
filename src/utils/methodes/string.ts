@@ -5,3 +5,7 @@ export function getSearchParams(url: string) {
 export function getSearchParam(url: string, key: string) {
   return getSearchParams(url).get(key);
 }
+
+export function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
