@@ -1,7 +1,7 @@
 import { prisma } from "~/utils/prisma/db";
 
 export async function getPlayerPremium() {
-  const res = await prisma.player.groupBy({
+  const res = await prisma.user.groupBy({
     by: ["premium"],
     _count: {
       id: true,

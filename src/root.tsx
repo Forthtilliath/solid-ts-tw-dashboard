@@ -18,7 +18,7 @@ export default function Root() {
   return (
     <Html lang="fr">
       <Head>
-        <Title>SolidStart - With TailwindCSS</Title>
+        <Title>Board Game Addiction - Dashboard</Title>
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>

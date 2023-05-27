@@ -10,10 +10,11 @@ export default function Dashboard() {
   const [dataPremiums] = createResource<API.Premium>(getPremiums);
 
   return (
-    <div class="max-w-sm">
+    <div class="grid grid-cols-[repeat(auto-fit,_minmax(400px,_600px))] grid-flow-row gap-4 border-4 border-red-600">
       <Show when={dataPremiums()} fallback={<p>Loading...</p>}>
         {(premiums) => (
           <PieChart
+            title="Taux de joueurs premium"
             labels={Object.keys(premiums())}
             data={Object.values(premiums())}
           />

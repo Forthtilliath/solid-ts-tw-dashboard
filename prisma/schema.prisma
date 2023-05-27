@@ -6,31 +6,36 @@ generator client {
 }
 
 datasource db {
-  // provider = "postgresql"
-  // url      = env("DATABASE_URL")
   provider = "sqlite"
   url      = "file:./dev.db"
 }
 
 model Game {
-  id      Int       @id @default(autoincrement())
-  name    String
-  premium Boolean
-  History History[]
+  id         Int       @id @default(autoincrement())
+  name       String
+  premium    Boolean
+  image      String
+  popularity Int
+  minplayers Int
+  history    History[]
 }
 
-model Player {
-  id       Int       @id @default(autoincrement())
-  username String
-  premium  Boolean
-  History  History[]
+model User {
+  id           Int       @id @default(autoincrement())
+  username     String    @unique
+  password     String
+  premium      Boolean   @default(false)
+  endPremiumAt DateTime?
+  history      History[]
 }
 
 model History {
+  id       Int      @id @default(autoincrement())
   idGame   Int
-  idPlayer Int
-  game     Game   @relation(fields: [idGame], references: [id])
-  player   Player @relation(fields: [idPlayer], references: [id])
-
-  @@id([idGame, idPlayer])
+  idUser   Int
+  game     Game     @relation(fields: [idGame], references: [id])
+  user     User     @relation(fields: [idUser], references: [id])
+  playedAt DateTime
+  score    Int
+  duration Int
 }

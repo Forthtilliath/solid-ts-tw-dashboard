@@ -10,6 +10,9 @@ dependencies:
   '@solidjs/router':
     specifier: ^0.8.2
     version: 0.8.2(solid-js@1.7.2)
+  faker:
+    specifier: ^5.5.3
+    version: 5.5.3
   solid-apexcharts:
     specifier: ^0.2.4
     version: 0.2.4(apexcharts@3.40.0)(solid-js@1.7.2)
@@ -24,6 +27,9 @@ dependencies:
     version: 5.15.1
 
 devDependencies:
+  '@faker-js/faker':
+    specifier: ^8.0.1
+    version: 8.0.1
   autoprefixer:
     specifier: ^10.4.13
     version: 10.4.13(postcss@8.4.21)
@@ -1511,6 +1517,11 @@ packages:
     requiresBuild: true
     optional: true
 
+  /@faker-js/faker@8.0.1:
+    resolution: {integrity: sha512-kbh5MenpTN9U0B4QcOI1NoTPlZHniSYQ3BHbhAnPjJGAmmFqxoxTE4sGdpy7ZOO9038DPGCuhXyMkjOr05uVwA==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+    dev: true
+
   /@hapi/hoek@9.3.0:
     resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
 
@@ -2273,6 +2284,10 @@ packages:
       onetime: 6.0.0
       signal-exit: 3.0.7
       strip-final-newline: 3.0.0
+
+  /faker@5.5.3:
+    resolution: {integrity: sha512-wLTv2a28wjUyWkbnX7u/ABZBkUkIF2fCd73V6P2oFqEGEktDfzWx4UxrSqtPRw0xPRAcjeAOIiJWqZm3pP4u3g==}
+    dev: false
 
   /fast-glob@3.2.12:
     resolution: {integrity: sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==}

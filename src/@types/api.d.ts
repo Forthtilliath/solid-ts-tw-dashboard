@@ -6,6 +6,8 @@ declare global {
     // };
     type Premium = Record<"free" | "premium", number>;
   }
+
+  
 }
 
 export {};
