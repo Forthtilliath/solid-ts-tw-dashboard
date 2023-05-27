@@ -8,3 +8,7 @@ export const SolidApexCharts = unstable_clientOnly(
 export const PieChart = unstable_clientOnly(
   () => import("~/components/charts/PieChart")
 );
+
+export const RadarBasicChart = unstable_clientOnly(
+  () => import("~/components/charts/RadarBasicChart")
+);
