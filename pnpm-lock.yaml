@@ -13,6 +13,9 @@ dependencies:
   deepmerge:
     specifier: ^4.3.1
     version: 4.3.1
+  prisma:
+    specifier: ^4.14.1
+    version: 4.14.1
   solid-apexcharts:
     specifier: ^0.2.4
     version: 0.2.4(apexcharts@3.40.0)(solid-js@1.7.5)
@@ -36,9 +39,6 @@ devDependencies:
   postcss:
     specifier: ^8.4.24
     version: 8.4.24
-  prisma:
-    specifier: ^4.14.1
-    version: 4.14.1
   solid-start-node:
     specifier: ^0.2.26
     version: 0.2.26(solid-start@0.2.26)(undici@5.22.1)(vite@4.3.9)
@@ -1435,6 +1435,7 @@ packages:
   /@prisma/engines@4.14.1:
     resolution: {integrity: sha512-APqFddPVHYmWNKqc+5J5SqrLFfOghKOLZxobmguDUacxOwdEutLsbXPVhNnpFDmuQWQFbXmrTTPoRrrF6B1MWA==}
     requiresBuild: true
+    dev: false
 
   /@rollup/plugin-commonjs@24.1.0(rollup@3.23.0):
     resolution: {integrity: sha512-eSL45hjhCWI0jCCXcNtLVqM5N1JlBGvlFfY0m6oOYnLCJ6N0qEXoZql4sY2MOUArzhH4SA/qBpTxvvZp2Sc+DQ==}
@@ -2641,6 +2642,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@prisma/engines': 4.14.1
+    dev: false
 
   /queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
