@@ -1,6 +1,5 @@
 import { Show, createResource } from "solid-js";
 import {
-  ColumnStackedChart,
   PieChart,
   RadarBasicChart,
 } from "~/components/charts";
@@ -11,11 +10,6 @@ async function getConnected() {
   return res.json();
 }
 
-// async function getLastConnexions() {
-//   const res = await fetch("http://localhost:3000/api/player?q=lastconnexions");
-//   return res.json();
-// }
-
 async function getGender() {
   const res = await fetch("http://localhost:3000/api/player?q=gender");
   return res.json();
@@ -24,8 +18,6 @@ async function getGender() {
 export default function PlayerStats() {
   const [dataConnected] = createResource<Record<string, number>>(getConnected);
   const [dataGender] = createResource<Record<string, number>>(getGender);
-  // const [dataLastConnexions] =
-  //   createResource<Chart.ColumnData>(getLastConnexions);
 
   return (
     <div class="grid justify-center grid-cols-[repeat(auto-fit,_minmax(500px,_600px))] grid-flow-row gap-4 p-2">
@@ -43,19 +35,7 @@ export default function PlayerStats() {
           />
         )}
       </Show>
-      {/* <Show when={dataLastConnexions()} fallback={<p>Loading...</p>}>
-        {(lastConnexions) => (
-          <ColumnStackedChart
-            title="Dernières connexions"
-            labels={["Jours", "Mois", "Années"]}
-            data={lastConnexions()}
-            colors={"white"}
-            stackType="100%"
-          />
-        )}
-      </Show> */}
 
-      {/* PIE : Gender */}
       <Show when={dataGender()} fallback={<p>Loading...</p>}>
         {(satisfaction) => (
           <PieChart
