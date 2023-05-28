@@ -2,8 +2,8 @@ import { SolidApexCharts } from "solid-apexcharts";
 
 type ApexChartProps = Parameters<typeof SolidApexCharts>[0];
 type ApexChartOptions = ApexChartProps["options"];
-type ApexChartTitle = ApexChartOptions["title"];
 
+/** Options utilisées pour tous les graphes */
 export const defaultOptions = {
   responsive: [
     {

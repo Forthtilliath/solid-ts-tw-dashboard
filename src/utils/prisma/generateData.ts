@@ -34,11 +34,8 @@ function getPlayersDate() {
   return { createdAt, lastConnexion };
 }
 
-(() => {
-
-  console.log("d", getBirthday());
-})();
-
+// Génère des ages en conformité avec les stats d'utilisation
+// https://www.similarweb.com/website/boardgamearena.com/#traffic
 function getBirthday() {
   return faker.helpers.weightedArrayElement([
     {
@@ -90,6 +87,7 @@ export async function createUsers(quantity: number) {
   const users = Array.from({ length: quantity }, () => ({
     username: faker.internet.userName(),
     password: faker.internet.password(),
+    // Génère les genres en conformité avec les stats d'utilisation
     gender: faker.datatype.boolean({ probability: 0.35 }) ? "female" : "male",
     birthday: getBirthday(),
     ...getPlayersDate(),

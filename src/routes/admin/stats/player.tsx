@@ -49,6 +49,10 @@ export default function PlayerStats() {
           />
         )}
       </Show> */}
+
+      {/* PIE : Gender */}
+
+      {/* BAR : Ages */}
     </div>
   );
 }
