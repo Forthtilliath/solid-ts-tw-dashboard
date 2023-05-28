@@ -50,11 +50,11 @@ export function Navigation() {
           path="/admin/stats/player"
           icon={<FaSolidUserGroup size={size} />}
         />
-        <NavItem
+        {/* <NavItem
           label="Stats des revenus"
           path="/admin/stats/income"
           icon={<RiFinanceMoneyEuroBoxFill size={size} />}
-        />
+        /> */}
       </div>
     </div>
   );
