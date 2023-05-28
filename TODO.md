@@ -44,9 +44,9 @@ https://www.codemotion.com/magazine/frontend/how-to-create-an-mdx-blog-in-typesc
 ## Elements du menu
 
 - Dashboard
-  - Taux de satisfaction : Pie
-  - Taux de joueurs premium : Pie
-  - Taux de jeux premium : Pie
+  - [x] Taux de satisfaction : Pie
+  - [x] Taux de joueurs premium : Pie
+  - [x] Taux de jeux premium : Pie
 - Gestions des news
   - MDX avec comments via prisma ?
     - Like des players
@@ -59,7 +59,7 @@ https://www.codemotion.com/magazine/frontend/how-to-create-an-mdx-blog-in-typesc
   - Possibilité de le bannir ou non
   - Possibilité de le rendre premium
 - Stats liées aux jeux
-  - Jeux les plus joués : Area Spline
+  - [ ] Jeux les plus joués : Area Spline
 - Stats liées aux joueurs
   - Diagrammes avec nombre de joueurs chaque jour de la semaine : Radar Basic
   - Le plus de joueurs co simultanément : Juste un nombre
@@ -80,7 +80,7 @@ https://www.codemotion.com/magazine/frontend/how-to-create-an-mdx-blog-in-typesc
 - 1 graph en bar pour les données liées aux jours
   - inscription
   - last connexion
-
+  - last premium
 
 - Nombre de parties en cours :
   - SetInterval() 30s inc/dec nombre

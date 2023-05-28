@@ -1,4 +1,5 @@
-import { setDay } from "~/utils/methodes/date";
+import { transposeArrays } from "~/utils/methodes/array";
+import { setDay, setMonth } from "~/utils/methodes/date";
 import { prisma } from "~/utils/prisma/db";
 
 export async function getPlayerPremium() {
@@ -18,70 +19,83 @@ export async function getPlayerPremium() {
   );
 }
 
-async function getLastConnexion(start: number, end: number) {
-  return await prisma.user
-    .findMany({
-      where: {
-        lastConnexion: {
-          gt: setDay(start),
-          lte: setDay(end),
-        },
+/**
+ * @returns [free,premium]
+ */
+async function getConnexionsBetween(from: Date, to = new Date()) {
+  const res = await prisma.user.groupBy({
+    by: ["premium"],
+    _count: {
+      id: true,
+    },
+    where: {
+      lastConnexion: {
+        gt: from,
+        lte: to,
       },
-    })
-    .then((r) => r.length);
+    },
+  });
+
+  return res.map((item) => item._count.id);
 }
 
-export async function getLastConnexions() {
-  const current = await Promise.all([
-    getLastConnexion(-1, 0),
-    getLastConnexion(-30, 0),
-    getLastConnexion(-365, 0),
+export async function getActives() {
+  const actives = await Promise.all([
+    getConnexionsBetween(setMonth(-1)),
+    getConnexionsBetween(setMonth(-3)),
+    getConnexionsBetween(setMonth(-6)),
+    getConnexionsBetween(setMonth(-12)),
   ]);
-
-  const past1 = await Promise.all([
-    getLastConnexion(-1 * 2, -1 * 1),
-    getLastConnexion(-30 * 2, -30 * 1),
-    getLastConnexion(-365 * 2, -365 * 1),
-  ]);
-
-  const past2 = await Promise.all([
-    getLastConnexion(-1 * 3, -1 * 2),
-    getLastConnexion(-30 * 3, -30 * 2),
-    getLastConnexion(-365 * 3, -365 * 2),
-  ]);
+  const [free, premium] = transposeArrays(actives);
 
   return [
     {
-      name: "Courant",
-      data: current,
+      name: "Gratuit",
+      data: free,
     },
     {
-      name: "1 avant",
-      data: past1,
+      name: "Premium",
+      data: premium,
     },
-    {
-      name: "2 avant",
-      data: past2,
-    },
-  ];
+  ] satisfies Chart.ColumnData;
 }
 
-// export async function getLastConnexions() {
-//   const day = [
-//     { x: "D", y: await getLastConnexion(-1, 0) },
-//     { x: "D-1", y: await getLastConnexion(-2, -1) },
-//     { x: "D-2", y: await getLastConnexion(-3, -2) },
-//   ];
-//   const month = [
-//     { x: "M", y: await getLastConnexion(-30, 0) },
-//     { x: "M-1", y: await getLastConnexion(-60, -30) },
-//     { x: "M-2", y: await getLastConnexion(-90, -60) },
-//   ];
-//   const year = [
-//     { x: "Y", y: await getLastConnexion(-365, 0) },
-//     { x: "Y-1", y: await getLastConnexion(-365 * 2, -365) },
-//     { x: "Y-2", y: await getLastConnexion(-365 * 3, -365 * 2) },
-//   ];
+/**
+ * @returns [free,premium]
+ */
+async function getConnexionsBefore(to = new Date()) {
+  const res = await prisma.user.groupBy({
+    by: ["premium"],
+    _count: {
+      id: true,
+    },
+    where: {
+      lastConnexion: {
+        lt: to,
+      },
+    },
+  });
 
-//   return [day, month, year].flat();
-// }
+  return res.map((item) => item._count.id);
+}
+
+export async function getInactives() {
+  const inactives = await Promise.all([
+    getConnexionsBefore(setMonth(-1)),
+    getConnexionsBefore(setMonth(-3)),
+    getConnexionsBefore(setMonth(-6)),
+    getConnexionsBefore(setMonth(-12)),
+  ]);
+  const [free, premium] = transposeArrays(inactives);
+
+  return [
+    {
+      name: "Gratuit",
+      data: free,
+    },
+    {
+      name: "Premium",
+      data: premium,
+    },
+  ] satisfies Chart.ColumnData;
+}

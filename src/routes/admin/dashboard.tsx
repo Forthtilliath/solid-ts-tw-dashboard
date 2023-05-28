@@ -1,6 +1,6 @@
 import { Show, createResource } from "solid-js";
 import { DashboardCard } from "~/components/cards/DashboardCard";
-import { ColumnStacked100Chart, PieChart } from "~/components/charts";
+import { ColumnStackedChart, PieChart } from "~/components/charts";
 import { capitalize } from "~/utils/methodes/string";
 
 async function getPlayerPremiums() {
@@ -18,10 +18,22 @@ async function getPlayerSatisfaction() {
   return res.json();
 }
 
+async function getPlayerActive() {
+  const res = await fetch("http://localhost:3000/api/player?q=actives");
+  return res.json();
+}
+
+async function getPlayerInactive() {
+  const res = await fetch("http://localhost:3000/api/player?q=inactives");
+  return res.json();
+}
+
 export default function Dashboard() {
   const [dataPlayerPremiums] = createResource<API.Rate>(getPlayerPremiums);
   const [dataGamePremiums] = createResource<API.Rate>(getGamePremiums);
   const [dataSatisfaction] = createResource<API.Rate>(getPlayerSatisfaction);
+  const [dataActive] = createResource<Chart.ColumnData>(getPlayerActive);
+  const [dataInactive] = createResource<Chart.ColumnData>(getPlayerInactive);
 
   return (
     <div class="grid grid-cols-[repeat(auto-fit,_minmax(400px,_600px))] grid-flow-row gap-4 my-3">
@@ -50,6 +62,7 @@ export default function Dashboard() {
             title="Taux de joueurs premium"
             labels={Object.keys(premiums()).map(capitalize)}
             data={Object.values(premiums())}
+            colors={["white"]}
           />
         )}
       </Show>
@@ -60,6 +73,7 @@ export default function Dashboard() {
             title="Taux de jeux premium"
             labels={Object.keys(premiums()).map(capitalize)}
             data={Object.values(premiums())}
+            colors={["white"]}
           />
         )}
       </Show>
@@ -70,25 +84,55 @@ export default function Dashboard() {
             title="Taux de satisfaction"
             labels={Object.keys(satisfaction()).map(capitalize)}
             data={Object.values(satisfaction())}
+            colors={["white"]}
           />
         )}
       </Show>
 
-      {/* <Show when={dataLastConnexions()} fallback={<p>Loading...</p>}>
-        {(lastConnexions) => (
-          <ColumnStacked100Chart
-            title="Part de premium sur actifs/inactifs"
-            data={lastConnexions()}
+      <Show when={dataActive()} fallback={<p>Loading...</p>}>
+        {(active) => (
+          <ColumnStackedChart
+            title="Part des joueurs gratuit/premium"
+            subTitle="Parmis les actifs de moins de..."
+            labels={["1mois", "3mois", "6mois", "1an"]}
+            data={active()}
             colors={"white"}
+            stackType="100%"
           />
         )}
-      </Show> */}
+      </Show>
+
+      <Show when={dataInactive()} fallback={<p>Loading...</p>}>
+        {(inactive) => (
+          <ColumnStackedChart
+            title="Part des joueurs gratuit/premium"
+            subTitle="Parmis les inactifs de plus de..."
+            labels={["1mois", "3mois", "6mois", "1an"]}
+            data={inactive()}
+            colors={"white"}
+            stackType="100%"
+          />
+        )}
+      </Show>
 
       {/* BAR: Nombre de comptes actif (dernière connexion 1 mois) */}
       {/* Nombre de comptes inactifs (3mois, 6mois, 1mois) */}
       {/* Part premium/non premium */}
 
       {/* AREA BASIC : CA */}
+      {/* 
+      [
+      {
+        name: 'Comptes actifs',
+        data:[34,12]
+      },
+      {
+        name: 'Comptes inactifs',
+        data:[45,13]
+      }
+      ]
+      
+      */}
     </div>
   );
 }

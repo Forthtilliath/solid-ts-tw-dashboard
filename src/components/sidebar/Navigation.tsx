@@ -21,7 +21,7 @@ export function Navigation() {
         />
       </div>
 
-      <div class="flex flex-col items-center w-full mt-3 border-t border-gray-700">
+      {/* <div class="flex flex-col items-center w-full mt-3 border-t border-gray-700">
         <NavItem
           label="Gestion des actualités"
           path="/admin/management/news"
@@ -37,7 +37,7 @@ export function Navigation() {
           path="/admin/management/player"
           icon={<FaSolidUser size={size} />}
         />
-      </div>
+      </div> */}
 
       <div class="flex flex-col items-center w-full mt-3 border-t border-gray-700">
         <NavItem

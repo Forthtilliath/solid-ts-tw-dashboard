@@ -1,43 +1,41 @@
 import { createStore } from "solid-js/store";
 import { SolidApexCharts } from "solid-apexcharts";
-import { getTitle, responsive } from "./chart.options";
 import { createEffect } from "solid-js";
+import { mergeDeep } from "~/utils/methodes/object";
+import { defaultOptions } from "./chart.options";
 
 type ApexChartProps = Parameters<typeof SolidApexCharts>[0];
 type ApexChartOptions = ApexChartProps["options"];
+type ApexChartSeries = ApexChartProps["series"];
 
 type Props = {
   title: string;
   labels?: string[];
   data: API.LastConnexion;
-  colors?: string[];
+  colors?: string | string[];
   bgColors?: string[];
   options?: ApexChartOptions;
 };
 
 export default function ColumnGroupChart(props: Props) {
   const [options] = createStore(
-    Object.assign(
+    mergeDeep(
+      structuredClone(defaultOptions),
       {
-        chart: {
-          width: "100%",
-          type: "bar",
-        },
-        title: getTitle(props.title),
+        chart: { type: "bar" },
+        title: { text: props.title },
         colors: props.bgColors,
 
         xaxis: {
           type: "category",
           labels: {
-            formatter: function (val) {
-              return "" + val;
-            },
+            formatter: (val) => "" + val,
           },
           group: {
             style: {
               fontSize: "10px",
               fontWeight: 700,
-              colors: "white",
+              colors: props.colors,
             },
             groups: [
               { title: "Jour", cols: 3 },
@@ -46,34 +44,16 @@ export default function ColumnGroupChart(props: Props) {
             ],
           },
         },
-        yaxis: {
-          show: true,
-          showAlways: true,
-          labels: {
-            show: true,
-            style: {
-              colors: "white",
-              fontSize: "12px",
-              fontFamily: "Helvetica, Arial, sans-serif",
-              fontWeight: 400,
-            },
-          },
-        },
         tooltip: {
           x: {
-            formatter: function (val) {
-              return "" + val;
-              //   return "Q" + dayjs(val).quarter() + " " + dayjs(val).format("YYYY")
-            },
+            formatter: (val) => "" + val,
           },
         },
-
-        responsive,
-      } satisfies ApexChartOptions,
+      },
       props.options
     )
   );
-  const [series] = createStore([{ data: props.data }]);
+  const [series] = createStore<ApexChartSeries>(props.data);
 
   createEffect(() => {
     console.log(options);

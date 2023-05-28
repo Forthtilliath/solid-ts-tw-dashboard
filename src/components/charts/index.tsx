@@ -18,6 +18,6 @@ export const ColumnGroupChart = unstable_clientOnly(
   () => import("~/components/charts/ColumnGroupChart")
 );
 
-export const ColumnStacked100Chart = unstable_clientOnly(
-  () => import("~/components/charts/ColumnStacked100Chart")
+export const ColumnStackedChart = unstable_clientOnly(
+  () => import("~/components/charts/ColumnStackedChart")
 );

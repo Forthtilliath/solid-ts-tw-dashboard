@@ -1,5 +1,7 @@
 import { createStore } from "solid-js/store";
 import { SolidApexCharts } from "solid-apexcharts";
+import { mergeDeep } from "~/utils/methodes/object";
+import { defaultOptions } from "./chart.options";
 
 type ApexChartProps = Parameters<typeof SolidApexCharts>[0];
 type ApexChartOptions = ApexChartProps["options"];
@@ -15,46 +17,23 @@ type Props = {
 
 export default function PieChart(props: Props) {
   const [options] = createStore(
-    Object.assign(
+    mergeDeep(
+      structuredClone(defaultOptions),
       {
         chart: {
-          width: "100%",
           type: "pie",
         },
         labels: props.labels,
-        fill: {
-          // Couleurs de fond dans le diagramme
-          colors: props.bgColors,
-        },
+        // Couleurs de fond dans le diagramme
+        fill: { colors: props.bgColors },
+        // Couleurs des textes dans le diagramme
         dataLabels: {
-          style: {
-            // Couleurs des textes dans le diagramme
-            colors: props.colors ?? ["white"],
-          },
+          style: { colors: props.colors },
+          formatter: (val: number) => val.toFixed(1) + "%",
         },
-        legend: {
-          fontSize: "20",
-          position: "bottom",
-          labels: {
-            // Couleurs des textes des légendes à coté
-            colors: "white",
-          },
-        },
-
-        responsive: [
-          {
-            breakpoint: 640,
-            options: {
-              chart: {
-                height: 500,
-              },
-              legend: {
-                position: "bottom",
-              },
-            },
-          },
-        ],
-      } satisfies ApexChartOptions,
+        // Couleurs des textes des légendes à coté
+        legend: { labels: { colors: "white" } },
+      },
       props.options
     )
   );
