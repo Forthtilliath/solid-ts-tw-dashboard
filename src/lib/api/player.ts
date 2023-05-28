@@ -1,5 +1,5 @@
 import { transposeArrays } from "~/utils/methodes/array";
-import { setDay, setMonth } from "~/utils/methodes/date";
+import { setMonth } from "~/utils/methodes/date";
 import { prisma } from "~/utils/prisma/db";
 
 export async function getPlayerPremium() {
