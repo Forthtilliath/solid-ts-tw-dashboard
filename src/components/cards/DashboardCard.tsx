@@ -3,6 +3,7 @@ import {
   AiFillDollarCircle,
   FaSolidArrowTrendDown,
   FaSolidArrowTrendUp,
+  FaSolidUserGroup,
   VsGraph,
 } from "../Icons";
 
@@ -11,7 +12,7 @@ type Props = {
   value: number | string;
   growth: number;
   submsg?: string;
-  icon?: "graph" | "dollar";
+  icon?: "graph" | "dollar" | "user";
   bgIcon?: string;
 };
 
@@ -40,6 +41,9 @@ export function DashboardCard(props: Props) {
                   </Match>
                   <Match when={props.icon === "dollar"}>
                     <AiFillDollarCircle size="1.5em" />
+                  </Match>
+                  <Match when={props.icon === "user"}>
+                    <FaSolidUserGroup size="1.5em" />
                   </Match>
                 </Switch>
               </div>

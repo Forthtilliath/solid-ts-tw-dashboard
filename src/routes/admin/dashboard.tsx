@@ -54,6 +54,14 @@ export default function Dashboard() {
           icon="dollar"
           bgIcon="bg-green-500"
         />
+        <DashboardCard
+          label="Nouveau comptes"
+          value="13"
+          growth={8.33}
+          submsg="Par rapport à hier"
+          icon="user"
+          bgIcon="bg-red-500"
+        />
       </div>
 
       <Show when={dataPlayerPremiums()} fallback={<p>Loading...</p>}>
@@ -85,16 +93,18 @@ export default function Dashboard() {
             labels={Object.keys(satisfaction()).map(capitalize)}
             data={Object.values(satisfaction())}
             colors={["white"]}
+            options={{ chart: { type: "donut" } }}
           />
         )}
       </Show>
 
+      {/* Line Charts > Line with Data Labels ??? */}
       <Show when={dataActive()} fallback={<p>Loading...</p>}>
         {(active) => (
           <ColumnStackedChart
             title="Part des joueurs gratuit/premium"
             subTitle="Parmis les actifs de moins de..."
-            labels={["1mois", "3mois", "6mois", "1an"]}
+            labels={["1 mois", "3 mois", "6 mois", "1 an"]}
             data={active()}
             colors={"white"}
             stackType="100%"
@@ -107,32 +117,13 @@ export default function Dashboard() {
           <ColumnStackedChart
             title="Part des joueurs gratuit/premium"
             subTitle="Parmis les inactifs de plus de..."
-            labels={["1mois", "3mois", "6mois", "1an"]}
+            labels={["1 mois", "3 mois", "6 mois", "1 an"]}
             data={inactive()}
             colors={"white"}
             stackType="100%"
           />
         )}
       </Show>
-
-      {/* BAR: Nombre de comptes actif (dernière connexion 1 mois) */}
-      {/* Nombre de comptes inactifs (3mois, 6mois, 1mois) */}
-      {/* Part premium/non premium */}
-
-      {/* AREA BASIC : CA */}
-      {/* 
-      [
-      {
-        name: 'Comptes actifs',
-        data:[34,12]
-      },
-      {
-        name: 'Comptes inactifs',
-        data:[45,13]
-      }
-      ]
-      
-      */}
     </div>
   );
 }
