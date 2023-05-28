@@ -96,4 +96,6 @@ https://www.codemotion.com/magazine/frontend/how-to-create-an-mdx-blog-in-typesc
 - min height pour les graph : responsive ?
 - label radar to style
 
-(https://www.similarweb.com/website/boardgamearena.com/#geography)
+https://www.similarweb.com/website/boardgamearena.com/#geography
+
+https://www.npmjs.com/package/deepmerge
