@@ -17,3 +17,7 @@ export const ColumnGroupChart = unstable_clientOnly(
 export const ColumnStackedChart = unstable_clientOnly(
   () => import("~/components/charts/ColumnStackedChart")
 );
+
+export const ColumnChart = unstable_clientOnly(
+  () => import("~/components/charts/ColumnChart")
+);
