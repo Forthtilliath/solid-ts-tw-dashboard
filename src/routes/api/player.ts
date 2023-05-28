@@ -88,6 +88,13 @@ export async function GET({ request }: APIEvent) {
       });
     }
 
+    case "gender": {
+      return json({
+        homme: 245,
+        femme: 26,
+      });
+    }
+
     default:
       return json({ error: "Not found" });
   }

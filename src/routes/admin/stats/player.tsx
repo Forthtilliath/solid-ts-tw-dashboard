@@ -1,40 +1,42 @@
 import { Show, createResource } from "solid-js";
-import { ColumnStackedChart, RadarBasicChart } from "~/components/charts";
+import {
+  ColumnStackedChart,
+  PieChart,
+  RadarBasicChart,
+} from "~/components/charts";
+import { capitalize } from "~/utils/methodes/string";
 
-async function getNbConnectedPlayers() {
-  // return {
-  //   lundi: 45,
-  //   mardi: 43,
-  //   mercredi: 80,
-  //   jeudi: 50,
-  //   vendredi: 62,
-  //   samedi: 102,
-  //   dimanche: 124,
-  // };
+async function getConnected() {
   const res = await fetch("http://localhost:3000/api/player?q=connected");
   return res.json();
 }
 
-async function getLastConnexions() {
-  const res = await fetch("http://localhost:3000/api/player?q=lastconnexions");
+// async function getLastConnexions() {
+//   const res = await fetch("http://localhost:3000/api/player?q=lastconnexions");
+//   return res.json();
+// }
+
+async function getGender() {
+  const res = await fetch("http://localhost:3000/api/player?q=gender");
   return res.json();
 }
 
 export default function PlayerStats() {
-  const [dataNbConnectedPlayers] = createResource<Record<string, number>>(
-    getNbConnectedPlayers
-  );
+  const [dataConnected] = createResource<Record<string, number>>(getConnected);
+  const [dataGender] = createResource<Record<string, number>>(getGender);
   // const [dataLastConnexions] =
   //   createResource<Chart.ColumnData>(getLastConnexions);
 
   return (
     <div class="grid justify-center grid-cols-[repeat(auto-fit,_minmax(500px,_600px))] grid-flow-row gap-4 p-2">
-      <Show when={dataNbConnectedPlayers()} fallback={<p>Loading...</p>}>
-        {(connectedPlayers) => (
+      <Show when={dataConnected()} fallback={<p>Loading...</p>}>
+        {(connected) => (
           <RadarBasicChart
-            title="Nombre moyen de joueurs connectés"
-            labels={Object.keys(connectedPlayers())}
-            data={[{ name: "", data: Object.values(connectedPlayers()) }]}
+            title="Moyenne de joueurs connectés"
+            subTitle="En fonction du jour de la semaine"
+            labels={Object.keys(connected()).map(capitalize)}
+            colors={"white"}
+            data={[{ name: "", data: Object.values(connected()) }]}
           />
         )}
       </Show>
@@ -51,6 +53,20 @@ export default function PlayerStats() {
       </Show> */}
 
       {/* PIE : Gender */}
+      <Show when={dataGender()} fallback={<p>Loading...</p>}>
+        {(satisfaction) => (
+          <PieChart
+            title="Répartition par sexe"
+            labels={Object.keys(satisfaction()).map(capitalize)}
+            data={Object.values(satisfaction())}
+            colors={["white"]}
+            bgColors={["#0038a8", "#d60270"]}
+            options={{
+              chart: { type: "donut" },
+            }}
+          />
+        )}
+      </Show>
 
       {/* BAR : Ages */}
     </div>
