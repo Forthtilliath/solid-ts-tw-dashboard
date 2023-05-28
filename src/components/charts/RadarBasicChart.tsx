@@ -17,6 +17,8 @@ type Props = {
   colors?: string | string[];
   bgColors?: string[];
   options?: ApexChartOptions;
+  polygonColors?: string[];
+  strokeColors?: string[];
 };
 
 export default function RadarBasicChart(props: Props) {
@@ -37,13 +39,26 @@ export default function RadarBasicChart(props: Props) {
         },
         title: { text: props.title },
         subtitle: { text: props.subTitle },
-        colors: props.bgColors,
+        colors: props.strokeColors,
         labels: props.labels,
         xaxis: {
           categories: props.labels,
           labels: { style: { colors: arrColor } },
         },
-        fill: { opacity: 0.8 },
+        yaxis: {
+          labels: { style: { colors: arrColor } },
+        },
+        fill: { colors: props.bgColors, opacity: 0.8 },
+
+        plotOptions: {
+          radar: {
+            polygons: {
+              fill: {
+                colors: props.polygonColors,
+              },
+            },
+          },
+        },
       },
       props.options
     )

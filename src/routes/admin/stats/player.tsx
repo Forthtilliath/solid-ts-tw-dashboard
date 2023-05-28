@@ -36,6 +36,9 @@ export default function PlayerStats() {
             subTitle="En fonction du jour de la semaine"
             labels={Object.keys(connected()).map(capitalize)}
             colors={"white"}
+            bgColors={["#6633ff80"]}
+            strokeColors={["#6633ff"]}
+            polygonColors={["#111827", "#1e293b"]}
             data={[{ name: "", data: Object.values(connected()) }]}
           />
         )}
