@@ -13,7 +13,6 @@
     "@faker-js/faker": "^8.0.2",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
-    "prisma": "^4.14.1",
     "solid-start-node": "^0.2.26",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.4",
@@ -21,6 +20,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.14.1",
+    "prisma": "^4.14.1",
     "@solidjs/meta": "^0.28.5",
     "@solidjs/router": "^0.8.2",
     "deepmerge": "^4.3.1",
