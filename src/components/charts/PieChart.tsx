@@ -26,6 +26,9 @@ export default function PieChart(props: Props) {
         labels: props.labels,
         // Couleurs de fond dans le diagramme
         fill: { colors: props.bgColors },
+        // markers: { colors: props.bgColors },
+        // Change la couleur dans la legende
+        colors: props.bgColors,
         // Couleurs des textes dans le diagramme
         dataLabels: {
           style: { colors: props.colors },
