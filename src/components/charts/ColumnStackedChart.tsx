@@ -1,7 +1,6 @@
 import { createStore } from "solid-js/store";
 import { SolidApexCharts } from "solid-apexcharts";
 import { defaultOptions } from "./chart.options";
-import { createEffect } from "solid-js";
 import { mergeDeep } from "~/utils/methodes/object";
 
 type ApexChartProps = Parameters<typeof SolidApexCharts>[0];
@@ -48,8 +47,6 @@ export default function ColumnStackedChart(props: Props) {
     )
   );
   const [series] = createStore<ApexChartSeries>(props.data);
-
-  createEffect(() => console.log(options));
 
   return (
     <SolidApexCharts

@@ -1,6 +1,5 @@
 import { createStore } from "solid-js/store";
 import { SolidApexCharts } from "solid-apexcharts";
-import { createEffect } from "solid-js";
 import { mergeDeep } from "~/utils/methodes/object";
 import { defaultOptions } from "./chart.options";
 
@@ -54,11 +53,6 @@ export default function ColumnGroupChart(props: Props) {
     )
   );
   const [series] = createStore<ApexChartSeries>(props.data);
-
-  createEffect(() => {
-    console.log(options);
-    console.log(series);
-  });
 
   return (
     <SolidApexCharts
