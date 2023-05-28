@@ -99,3 +99,19 @@ https://www.codemotion.com/magazine/frontend/how-to-create-an-mdx-blog-in-typesc
 https://www.similarweb.com/website/boardgamearena.com/#geography
 
 https://www.npmjs.com/package/deepmerge
+
+## TODO
+
+### fetcherPlayer
+```ts
+export async function fetcherPlayer(key: keyof PLAYER_PARAM){
+  const res = await fetch("http://localhost:3000/api/player?q=" + key);
+  return res.json();
+}
+
+fetcherPlayer(PLAYER_PARAM.GENDER);
+
+case PLAYER_PARAM.GENDER:
+```
+
+### Fonts
