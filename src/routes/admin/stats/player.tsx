@@ -1,5 +1,6 @@
-import { Show, createResource } from "solid-js";
+import { Show } from "solid-js";
 import { PieChart, RadarBasicChart } from "~/components/charts";
+import { ColumnChart } from "~/components/charts";
 import { createResourceAPI } from "~/utils/hooks/createResourceAPI";
 import { capitalize } from "~/utils/methodes/string";
 
@@ -17,6 +18,9 @@ export default function PlayerStats() {
   );
   const [dataAge] = createResourceAPI<Record<string, number>>(
     "http://localhost:3000/api/player?q=age"
+  );
+  const [dataPlayerPremiums] = createResourceAPI<API.Rate>(
+    "http://localhost:3000/api/player?q=premiums"
   );
 
   return (
@@ -51,19 +55,24 @@ export default function PlayerStats() {
         )}
       </Show>
 
-      {/* BAR : Ages */}
+      <Show when={dataPlayerPremiums()} fallback={<p>Loading...</p>}>
+        {(premiums) => (
+          <PieChart
+            title="Taux de joueurs premium"
+            labels={Object.keys(premiums()).map(capitalize)}
+            data={Object.values(premiums())}
+            colors={["white"]}
+          />
+        )}
+      </Show>
 
       <Show when={dataAge()} fallback={<p>Loading...</p>}>
         {(age) => (
-          <PieChart
+          <ColumnChart
             title="Répartition par âge"
-            labels={Object.keys(age()).map(capitalize)}
+            labels={Object.keys(age())}
             data={Object.values(age())}
-            colors={["white"]}
-            bgColors={["#0038a8", "#d60270"]}
-            options={{
-              chart: { type: "donut" },
-            }}
+            colors={"white"}
           />
         )}
       </Show>

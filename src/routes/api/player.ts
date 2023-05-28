@@ -95,6 +95,17 @@ export async function GET({ request }: APIEvent) {
       });
     }
 
+    case "age": {
+      return json({
+        "18-24": Math.floor(26.85 * 500 / 100),
+        "25-34": Math.floor(32.56 * 500 / 100),
+        "35-44": Math.floor(18.30 * 500 / 100),
+        "45-54": Math.floor(10.90 * 500 / 100),
+        "55-64": Math.floor(7.03 * 500 / 100),
+        "65+": Math.floor(4.36 * 500 / 100),
+      });
+    }
+
     default:
       return json({ error: "Not found" });
   }
