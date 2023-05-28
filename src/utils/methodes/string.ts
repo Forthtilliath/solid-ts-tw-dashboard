@@ -9,3 +9,7 @@ export function getSearchParam(url: string, key: string) {
 export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function isString(str: any): str is string {
+  return typeof str === "string";
+}
