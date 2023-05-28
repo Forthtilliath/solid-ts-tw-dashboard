@@ -1,39 +1,25 @@
-import { Show, createResource } from "solid-js";
+import { Show } from "solid-js";
 import { DashboardCard } from "~/components/cards/DashboardCard";
 import { ColumnStackedChart, PieChart } from "~/components/charts";
+import { createResourceAPI } from "~/utils/hooks/createResourceAPI";
 import { capitalize } from "~/utils/methodes/string";
 
-async function getPlayerPremiums() {
-  const res = await fetch("http://localhost:3000/api/player?q=premiums");
-  return res.json();
-}
-
-async function getGamePremiums() {
-  const res = await fetch("http://localhost:3000/api/game?q=premiums");
-  return res.json();
-}
-
-async function getPlayerSatisfaction() {
-  const res = await fetch("http://localhost:3000/api/player?q=satisfaction");
-  return res.json();
-}
-
-async function getPlayerActive() {
-  const res = await fetch("http://localhost:3000/api/player?q=actives");
-  return res.json();
-}
-
-async function getPlayerInactive() {
-  const res = await fetch("http://localhost:3000/api/player?q=inactives");
-  return res.json();
-}
-
 export default function Dashboard() {
-  const [dataPlayerPremiums] = createResource<API.Rate>(getPlayerPremiums);
-  const [dataGamePremiums] = createResource<API.Rate>(getGamePremiums);
-  const [dataSatisfaction] = createResource<API.Rate>(getPlayerSatisfaction);
-  const [dataActive] = createResource<Chart.ColumnData>(getPlayerActive);
-  const [dataInactive] = createResource<Chart.ColumnData>(getPlayerInactive);
+  const [dataPlayerPremiums] = createResourceAPI<API.Rate>(
+    "http://localhost:3000/api/player?q=premiums"
+  );
+  const [dataGamePremiums] = createResourceAPI<API.Rate>(
+    "http://localhost:3000/api/game?q=premiums"
+  );
+  const [dataSatisfaction] = createResourceAPI<API.Rate>(
+    "http://localhost:3000/api/player?q=satisfaction"
+  );
+  const [dataActive] = createResourceAPI<Chart.ColumnData>(
+    "http://localhost:3000/api/player?q=actives"
+  );
+  const [dataInactive] = createResourceAPI<Chart.ColumnData>(
+    "http://localhost:3000/api/player?q=inactives"
+  );
 
   return (
     <div class="grid grid-cols-[repeat(auto-fit,_minmax(400px,_600px))] grid-flow-row gap-4 my-3">

@@ -1,23 +1,23 @@
 import { Show, createResource } from "solid-js";
-import {
-  PieChart,
-  RadarBasicChart,
-} from "~/components/charts";
+import { PieChart, RadarBasicChart } from "~/components/charts";
+import { createResourceAPI } from "~/utils/hooks/createResourceAPI";
 import { capitalize } from "~/utils/methodes/string";
 
-async function getConnected() {
-  const res = await fetch("http://localhost:3000/api/player?q=connected");
-  return res.json();
-}
-
-async function getGender() {
+async function getAge() {
   const res = await fetch("http://localhost:3000/api/player?q=gender");
   return res.json();
 }
 
 export default function PlayerStats() {
-  const [dataConnected] = createResource<Record<string, number>>(getConnected);
-  const [dataGender] = createResource<Record<string, number>>(getGender);
+  const [dataConnected] = createResourceAPI<Record<string, number>>(
+    "http://localhost:3000/api/player?q=connected"
+  );
+  const [dataGender] = createResourceAPI<Record<string, number>>(
+    "http://localhost:3000/api/player?q=gender"
+  );
+  const [dataAge] = createResourceAPI<Record<string, number>>(
+    "http://localhost:3000/api/player?q=age"
+  );
 
   return (
     <div class="grid justify-center grid-cols-[repeat(auto-fit,_minmax(500px,_600px))] grid-flow-row gap-4 p-2">
@@ -37,11 +37,11 @@ export default function PlayerStats() {
       </Show>
 
       <Show when={dataGender()} fallback={<p>Loading...</p>}>
-        {(satisfaction) => (
+        {(gender) => (
           <PieChart
             title="Répartition par sexe"
-            labels={Object.keys(satisfaction()).map(capitalize)}
-            data={Object.values(satisfaction())}
+            labels={Object.keys(gender()).map(capitalize)}
+            data={Object.values(gender())}
             colors={["white"]}
             bgColors={["#0038a8", "#d60270"]}
             options={{
@@ -52,6 +52,21 @@ export default function PlayerStats() {
       </Show>
 
       {/* BAR : Ages */}
+
+      <Show when={dataAge()} fallback={<p>Loading...</p>}>
+        {(age) => (
+          <PieChart
+            title="Répartition par âge"
+            labels={Object.keys(age()).map(capitalize)}
+            data={Object.values(age())}
+            colors={["white"]}
+            bgColors={["#0038a8", "#d60270"]}
+            options={{
+              chart: { type: "donut" },
+            }}
+          />
+        )}
+      </Show>
     </div>
   );
 }
