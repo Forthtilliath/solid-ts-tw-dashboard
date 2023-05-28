@@ -22,8 +22,9 @@ export default function Dashboard() {
   );
 
   return (
-    <div class="grid grid-cols-[repeat(auto-fit,_minmax(400px,_600px))] grid-flow-row gap-4 my-3">
-      <div class="col-span-full flex flex-wrap">
+    <>
+      {/* <div class="flex flex-wrap justify-center gap-2 my-3 max-w-6xl"> */}
+      <div class="grid justify-center grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] grid-flow-row gap-4 max-w-7xl mx-auto">
         <DashboardCard
           label="Nombre total de visites"
           value="15.1M"
@@ -50,66 +51,70 @@ export default function Dashboard() {
         />
       </div>
 
-      <Show when={dataPlayerPremiums()} fallback={<p>Loading...</p>}>
-        {(premiums) => (
-          <PieChart
-            title="Taux de joueurs premium"
-            labels={Object.keys(premiums()).map(capitalize)}
-            data={Object.values(premiums())}
-            colors={["white"]}
-          />
-        )}
-      </Show>
+      <div class="grid justify-center grid-cols-[repeat(auto-fit,_minmax(500px,_600px))] grid-flow-row gap-4 max-w-7xl mx-auto mt-5">
+        <Show when={dataPlayerPremiums()} fallback={<p>Loading...</p>}>
+          {(premiums) => (
+            <PieChart
+              title="Taux de joueurs premium"
+              labels={Object.keys(premiums()).map(capitalize)}
+              data={Object.values(premiums())}
+              colors={["white"]}
+            />
+          )}
+        </Show>
 
-      <Show when={dataGamePremiums()} fallback={<p>Loading...</p>}>
-        {(premiums) => (
-          <PieChart
-            title="Taux de jeux premium"
-            labels={Object.keys(premiums()).map(capitalize)}
-            data={Object.values(premiums())}
-            colors={["white"]}
-          />
-        )}
-      </Show>
+        <Show when={dataGamePremiums()} fallback={<p>Loading...</p>}>
+          {(premiums) => (
+            <PieChart
+              title="Taux de jeux premium"
+              labels={Object.keys(premiums()).map(capitalize)}
+              data={Object.values(premiums())}
+              colors={["white"]}
+            />
+          )}
+        </Show>
 
-      <Show when={dataSatisfaction()} fallback={<p>Loading...</p>}>
-        {(satisfaction) => (
-          <PieChart
-            title="Taux de satisfaction"
-            labels={Object.keys(satisfaction()).map(capitalize)}
-            data={Object.values(satisfaction())}
-            colors={["white"]}
-            options={{ chart: { type: "donut" } }}
-          />
-        )}
-      </Show>
+        <Show when={dataSatisfaction()} fallback={<p>Loading...</p>}>
+          {(satisfaction) => (
+            <PieChart
+              title="Taux de satisfaction"
+              labels={Object.keys(satisfaction()).map(capitalize)}
+              data={Object.values(satisfaction())}
+              colors={["white"]}
+              options={{ chart: { type: "donut" } }}
+            />
+          )}
+        </Show>
 
-      {/* Line Charts > Line with Data Labels ??? */}
-      <Show when={dataActive()} fallback={<p>Loading...</p>}>
-        {(active) => (
-          <ColumnStackedChart
-            title="Part des joueurs gratuit/premium"
-            subTitle="Parmis les actifs de moins de..."
-            labels={["1 mois", "3 mois", "6 mois", "1 an"]}
-            data={active()}
-            colors={"white"}
-            stackType="100%"
-          />
-        )}
-      </Show>
+        <div></div>
 
-      <Show when={dataInactive()} fallback={<p>Loading...</p>}>
-        {(inactive) => (
-          <ColumnStackedChart
-            title="Part des joueurs gratuit/premium"
-            subTitle="Parmis les inactifs de plus de..."
-            labels={["1 mois", "3 mois", "6 mois", "1 an"]}
-            data={inactive()}
-            colors={"white"}
-            stackType="100%"
-          />
-        )}
-      </Show>
-    </div>
+        {/* Line Charts > Line with Data Labels ??? */}
+        <Show when={dataActive()} fallback={<p>Loading...</p>}>
+          {(active) => (
+            <ColumnStackedChart
+              title="Part des joueurs gratuit/premium"
+              subTitle="Parmis les actifs de moins de..."
+              labels={["1 mois", "3 mois", "6 mois", "1 an"]}
+              data={active()}
+              colors={"white"}
+              stackType="100%"
+            />
+          )}
+        </Show>
+
+        <Show when={dataInactive()} fallback={<p>Loading...</p>}>
+          {(inactive) => (
+            <ColumnStackedChart
+              title="Part des joueurs gratuit/premium"
+              subTitle="Parmis les inactifs de plus de..."
+              labels={["1 mois", "3 mois", "6 mois", "1 an"]}
+              data={inactive()}
+              colors={"white"}
+              stackType="100%"
+            />
+          )}
+        </Show>
+      </div>
+    </>
   );
 }

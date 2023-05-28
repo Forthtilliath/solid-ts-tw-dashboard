@@ -4,7 +4,7 @@ import { SignoutButton } from "./SignoutButton";
 
 export function Sidebar() {
   return (
-    <aside class="hidden md:flex flex-col items-center w-full h-full overflow-hidden text-gray-400 bg-gray-900 rounded">
+    <aside class="hidden md:flex flex-col items-center w-full h-full overflow-hidden text-gray-400 bg-gray-900 rounded shadow-lg">
       <div class="flex justify-between items-center p-4">
         <Logo />
       </div>

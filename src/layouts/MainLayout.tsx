@@ -7,7 +7,7 @@ export function MainLayout(props: ParentProps) {
     <div class="min-h-screen grid grid-cols-1 grid-rows-[1fr_4rem] md:grid-cols-[16rem_1fr] md:grid-rows-1 gap-0 bg-slate-800">
       {/* Seulement pour tablet et pc */}
       <Sidebar />
-      <main class="flex-grow">{props.children}</main>
+      <main class="flex-grow overflow-x-hidden overflow-y-auto h-[100dvh] p-3">{props.children}</main>
       {/* Seulement pour mobile */}
       <BottomNavigation />
     </div>
