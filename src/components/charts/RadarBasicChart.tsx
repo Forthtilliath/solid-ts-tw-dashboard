@@ -2,7 +2,6 @@ import { createStore } from "solid-js/store";
 import { SolidApexCharts } from "solid-apexcharts";
 import { defaultOptions } from "./chart.options";
 import { mergeDeep } from "~/utils/methodes/object";
-import { createEffect } from "solid-js";
 import { isString } from "~/utils/methodes/string";
 
 type ApexChartProps = Parameters<typeof SolidApexCharts>[0];
@@ -63,10 +62,8 @@ export default function RadarBasicChart(props: Props) {
       props.options
     )
   );
-  // const [series] = createStore<ApexChartSeries>([{ data: props.data }]);
-  const [series] = createStore<ApexChartSeries>(props.data);
 
-  createEffect(() => console.log(options));
+  const [series] = createStore<ApexChartSeries>(props.data);
 
   return (
     <SolidApexCharts
