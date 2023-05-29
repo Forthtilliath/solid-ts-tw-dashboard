@@ -13,12 +13,11 @@ import { faker } from '@faker-js/faker';
 import { prisma } from "./db";
 import { daysBetween, setYear } from "../methodes/date";
 import { assertsIsDate } from "../methodes/asserts";
-import { Prisma } from "@prisma/client";
 
-export async function generateData({ users = 0, histories = 0 }) {
+export async function generateData({ users = 0, playedGames = 0 }) {
   await createUsers(users);
   await createGames();
-  await createHistory(histories);
+  await createPlayedGames(playedGames);
 }
 
 /**
@@ -469,57 +468,87 @@ export async function createGames() {
   ]);
 }
 
-export async function createGameplays(quantity: number) {}
+export async function createGamescore(gameId: number, playedAt: Date) {
+  const users = await prisma.user.findMany({
+    where: {
+      createdAt: {
+        lt: playedAt,
+      },
+      lastConnection: {
+        gt: playedAt,
+      },
+    },
+    select: {
+      id: true,
+    },
+  });
 
-export async function createHistory(quantity: number) {
-  const gamesId = await prisma.game
-    .findMany({ select: { id: true } })
-    .then((r) => r.map((g) => g.id));
-  const usersId = await prisma.user
-    .findMany({ select: { id: true } })
-    .then((r) => r.map((u) => u.id));
+  const playersIds = faker.helpers.arrayElements(users, { min: 2, max: 8 });
+
+  return playersIds.map(
+    (user) =>
+      ({
+        score: faker.number.int(100),
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+      })
+  );
+}
+
+export async function createPlayedGame() {
+  const gameIds = await getModelIds("game");
+  const gameId = faker.helpers.arrayElement(gameIds);
+  const playedAt = faker.date.past();
+
+  console.log({gameIds, gameId})
+
+  return {
+    game: {
+      connect: {
+        id: gameId,
+      },
+    },
+    playedAt: playedAt,
+    duration: faker.number.int({ min: 5, max: 45 }),
+    scoreList: {
+      create: await createGamescore(gameId, playedAt),
+    },
+  } satisfies DB.PlayedGameCreation;
+}
+
+export async function createPlayedGames(quantity: number) {
+  const gameIds = await getModelIds("game");
+  const userIds = await getModelIds("user");
 
   // Les données générées pourraient etre mieux
   // Ici un historique ne prend en compte qu'un joueur par partie !
   // TODO: Il faudrait mettre idUser en Int[]
   // Si j'ai le temps
-  const gamesData = Array.from(
+  const playedGamesData = Array.from(
     { length: quantity },
-    () =>
-      ({
-        idGame: faker.helpers.arrayElement(gamesId),
-        idUser: faker.helpers.arrayElement(usersId),
-        playedAt: faker.date.past(),
-        score: faker.number.int(100),
-        duration: faker.number.int({ min: 5, max: 45 }),
-      } satisfies WithoutId<DB.History>)
+    createPlayedGame
   );
 
+  console.log(...playedGamesData)
+
+  // TODO: uncomment
+  // await prisma.$transaction([
+  //   ...playedGamesData.map((playedGame) =>
+  //     prisma.playedGame.create({ data: playedGame })
+  //   ),
+  // ]);
   await prisma.$transaction([
-    ...gamesData.map((history) => prisma.history.create({ data: history })),
+    ...(await Promise.all(playedGamesData)).map((playedGame) =>
+      prisma.playedGame.create({ data: playedGame })
+    ),
   ]);
-  console.log("Data seeded successfully!");
 }
 
-async function getGamesId() {
-  return prisma.game
-    .findMany({ select: { id: true } })
-    .then((r) => r.map((g) => g.id));
-}
-
-async function getUsersId() {
-  return prisma.user
-    .findMany({ select: { id: true } })
-    .then((r) => r.map((g) => g.id));
-}
-
-type ModelName = "game" | "user"; // Add all valid model names here
-
-async function getModelIds(modelName: ModelName) {
+async function getModelIds(modelName: "game" | "user") {
   const records = await prisma[modelName].getAllIds();
   const recordIds = records.map((g) => g.id);
   return recordIds;
 }
-
-const gameIds = await getModelIds("game");
-const userIds = await getModelIds("user");

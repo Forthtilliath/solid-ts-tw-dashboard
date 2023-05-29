@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { createGames, createUsers, generateData } from "./generateData";
+import { createGames, createPlayedGames, createUsers, generateData } from "./generateData";
 
 export const prisma = new PrismaClient({
   log: [
@@ -36,7 +36,7 @@ export const prisma = new PrismaClient({
     },
     game: {
       getAllIds: async () => {
-        return await prisma.user.findMany({ select: { id: true } });
+        return await prisma.game.findMany({ select: { id: true } });
       },
     },
   },
@@ -49,7 +49,8 @@ prisma.$on("query", (e) => {
 });
 
 // generateData({ users: 100, histories: 5000 });
-// generateData({ histories: 2500 });
+// generateData({ playedGames:5 });
 
 // await createGames();
 // await createUsers(1);
+await createPlayedGames(1)

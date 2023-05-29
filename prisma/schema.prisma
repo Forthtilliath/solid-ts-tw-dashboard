@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["clientExtensions"]
 }
 
@@ -12,12 +12,12 @@ datasource db {
 }
 
 model Game {
-  id         Int        @id @default(autoincrement())
-  name       String     @unique
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
   premium    Boolean
   image      String
   popularity Int
-  gameList   Gameplay[]
+  gameList   PlayedGame[]
 }
 
 model User {
@@ -41,21 +41,23 @@ model UserPremium {
   idUser            Int
 }
 
-model Gameplay {
+model PlayedGame {
   id        Int         @id @default(autoincrement())
   playedAt  DateTime
   duration  Int
   game      Game        @relation(fields: [idGame], references: [id])
   idGame    Int
   scoreList Gamescore[]
+
+  @@map("Gameplay")
 }
 
 model Gamescore {
-  gameplay   Gameplay @relation(fields: [idGameplay], references: [id])
-  idGameplay Int
-  user       User     @relation(fields: [idUser], references: [id])
-  idUser     Int
-  score      Int
+  playedgame   PlayedGame @relation(fields: [idPlayedGame], references: [id])
+  idPlayedGame Int
+  user         User       @relation(fields: [idUser], references: [id])
+  idUser       Int
+  score        Int
 
-  @@unique([idGameplay, idUser])
+  @@unique([idPlayedGame, idUser])
 }
