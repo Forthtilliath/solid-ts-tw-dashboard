@@ -21,3 +21,7 @@ export const ColumnStackedChart = unstable_clientOnly(
 export const ColumnChart = unstable_clientOnly(
   () => import("~/components/charts/ColumnChart")
 );
+
+export const LineBasicChart = unstable_clientOnly(
+  () => import("~/components/charts/LineBasicChart")
+);
