@@ -35,7 +35,7 @@ export default function ColumnChart(props: Props) {
       props.options
     )
   );
-  const [series] = createStore<ApexChartSeries>([{ data: props.data }]);
+  const [series] = createStore<ApexChartSeries>([{ name:"", data: props.data }]);
 
   return (
     <SolidApexCharts

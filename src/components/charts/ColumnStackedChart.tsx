@@ -48,6 +48,8 @@ export default function ColumnStackedChart(props: Props) {
   );
   const [series] = createStore<ApexChartSeries>(props.data);
 
+  console.log({series})
+
   return (
     <SolidApexCharts
       width="100%"

@@ -11,34 +11,50 @@ datasource db {
 }
 
 model Game {
-  id         Int       @id @default(autoincrement())
-  name       String    @unique
+  id         Int        @id @default(autoincrement())
+  name       String     @unique
   premium    Boolean
   image      String
   popularity Int
-  minplayers Int
-  history    History[]
+  gameList   Gameplay[]
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  username      String    @unique
-  password      String
-  gender        String
-  premium       Boolean   @default(false)
-  endPremiumAt  DateTime?
-  createdAt     DateTime
-  lastConnexion DateTime
-  history       History[]
+  id             Int           @id @default(autoincrement())
+  username       String        @unique
+  password       String
+  gender         String
+  birthday       DateTime
+  createdAt      DateTime      @default(now())
+  lastConnection DateTime
+  scoreList      Gamescore[]
+  userPremium    UserPremium[]
 }
 
-model History {
-  id       Int      @id @default(autoincrement())
-  idGame   Int
-  idUser   Int
-  game     Game     @relation(fields: [idGame], references: [id])
-  user     User     @relation(fields: [idUser], references: [id])
-  playedAt DateTime
-  score    Int
-  duration Int
+model UserPremium {
+  id                Int      @id @default(autoincrement())
+  subscriptionAt    DateTime @default(now())
+  duration          Int
+  subscriptionEndAt DateTime
+  user              User     @relation(fields: [idUser], references: [id])
+  idUser            Int
+}
+
+model Gameplay {
+  id        Int         @id @default(autoincrement())
+  playedAt  DateTime
+  duration  Int
+  game      Game        @relation(fields: [idGame], references: [id])
+  idGame    Int
+  scoreList Gamescore[]
+}
+
+model Gamescore {
+  history   Gameplay @relation(fields: [idHistory], references: [id])
+  idHistory Int      @id @default(autoincrement())
+  user      User     @relation(fields: [idUser], references: [id])
+  idUser    Int
+  score     Int
+
+  @@unique([idHistory, idUser])
 }

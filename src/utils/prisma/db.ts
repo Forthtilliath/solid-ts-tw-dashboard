@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { generateData } from "./generateData";
+import { createGames, createUsers, generateData } from "./generateData";
 
 export const prisma = new PrismaClient({
   log: [
@@ -28,5 +28,8 @@ prisma.$on("query", (e) => {
   console.log("Duration: " + e.duration + "ms");
 });
 
-// generateData({ users: 300, histories: 500 });
+// generateData({ users: 100, histories: 5000 });
 // generateData({ histories: 2500 });
+
+// await createGames();
+// await createUsers(1);
