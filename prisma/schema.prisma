@@ -17,7 +17,7 @@ model Game {
   premium    Boolean
   image      String
   popularity Int
-  gameList   PlayedGame[]
+  playedList PlayedGame[]
 }
 
 model User {
@@ -37,7 +37,7 @@ model UserPremium {
   subscriptionAt    DateTime @default(now())
   duration          Int
   subscriptionEndAt DateTime
-  user              User     @relation(fields: [idUser], references: [id])
+  user              User     @relation(fields: [idUser], references: [id], onDelete: Cascade)
   idUser            Int
 }
 
@@ -55,7 +55,7 @@ model PlayedGame {
 model Gamescore {
   playedgame   PlayedGame @relation(fields: [idPlayedGame], references: [id])
   idPlayedGame Int
-  user         User       @relation(fields: [idUser], references: [id])
+  user         User       @relation(fields: [idUser], references: [id], onDelete: NoAction)
   idUser       Int
   score        Int
 
