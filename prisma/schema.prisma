@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["clientExtensions"]
 }
 
 datasource db {
@@ -50,11 +51,11 @@ model Gameplay {
 }
 
 model Gamescore {
-  history   Gameplay @relation(fields: [idHistory], references: [id])
-  idHistory Int      @id @default(autoincrement())
-  user      User     @relation(fields: [idUser], references: [id])
-  idUser    Int
-  score     Int
+  gameplay   Gameplay @relation(fields: [idGameplay], references: [id])
+  idGameplay Int
+  user       User     @relation(fields: [idUser], references: [id])
+  idUser     Int
+  score      Int
 
-  @@unique([idHistory, idUser])
+  @@unique([idGameplay, idUser])
 }

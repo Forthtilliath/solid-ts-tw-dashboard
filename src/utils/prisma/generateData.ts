@@ -13,6 +13,7 @@ import { faker } from '@faker-js/faker';
 import { prisma } from "./db";
 import { daysBetween, setYear } from "../methodes/date";
 import { assertsIsDate } from "../methodes/asserts";
+import { Prisma } from "@prisma/client";
 
 export async function generateData({ users = 0, histories = 0 }) {
   await createUsers(users);
@@ -468,6 +469,8 @@ export async function createGames() {
   ]);
 }
 
+export async function createGameplays(quantity: number) {}
+
 export async function createHistory(quantity: number) {
   const gamesId = await prisma.game
     .findMany({ select: { id: true } })
@@ -497,3 +500,26 @@ export async function createHistory(quantity: number) {
   ]);
   console.log("Data seeded successfully!");
 }
+
+async function getGamesId() {
+  return prisma.game
+    .findMany({ select: { id: true } })
+    .then((r) => r.map((g) => g.id));
+}
+
+async function getUsersId() {
+  return prisma.user
+    .findMany({ select: { id: true } })
+    .then((r) => r.map((g) => g.id));
+}
+
+type ModelName = "game" | "user"; // Add all valid model names here
+
+async function getModelIds(modelName: ModelName) {
+  const records = await prisma[modelName].getAllIds();
+  const recordIds = records.map((g) => g.id);
+  return recordIds;
+}
+
+const gameIds = await getModelIds("game");
+const userIds = await getModelIds("user");

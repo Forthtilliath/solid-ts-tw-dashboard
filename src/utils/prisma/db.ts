@@ -20,6 +20,26 @@ export const prisma = new PrismaClient({
       level: "warn",
     },
   ],
+}).$extends({
+  model: {
+    user: {
+      findById: async (userId: number) => {
+        const user = await prisma.user.findUnique({ where: { id: userId } });
+        if (!user) {
+          throw new Error(`User with id ${userId} not found`);
+        }
+        return user;
+      },
+      getAllIds: async () => {
+        return await prisma.user.findMany({ select: { id: true } });
+      },
+    },
+    game: {
+      getAllIds: async () => {
+        return await prisma.user.findMany({ select: { id: true } });
+      },
+    },
+  },
 });
 
 prisma.$on("query", (e) => {
