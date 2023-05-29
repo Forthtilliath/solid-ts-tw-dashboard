@@ -11,7 +11,7 @@ Array.from(document.querySelectorAll(".game_box_wrap")).map((element) => ({
 
 import { faker } from '@faker-js/faker';
 import { prisma } from "./db";
-import { daysBetween, setYear } from "../methodes/date";
+import { daysBetween } from "../methodes/date";
 import { assertsIsDate } from "../methodes/asserts";
 
 export async function generateData({ users = 0, playedGames = 0 }) {
@@ -19,10 +19,6 @@ export async function generateData({ users = 0, playedGames = 0 }) {
   await createGames();
   await createPlayedGames(playedGames);
 }
-
-/**
- *
- */
 
 function getPremiumInfos(from: Date, to: Date): DB.PremiumCreation[] {
   assertsIsDate(from);
@@ -54,87 +50,64 @@ function getPlayersDate() {
   const recent = faker.datatype.boolean({ probability: 0.7 });
   const recentDays = 15;
 
+  const isRecentAccount = daysBetween(createdAt, new Date()) < recentDays;
+
   const lastConnection =
-    recent || daysBetween(createdAt, new Date()) >= recentDays
+    recent && !isRecentAccount
       ? faker.date.recent({ days: recentDays })
       : faker.date.between({ from: createdAt, to: Date.now() });
 
   return { createdAt, lastConnection };
 }
 
-// Génère des ages en conformité avec les stats d'utilisation
-// https://www.similarweb.com/website/boardgamearena.com/#traffic
-function getBirthday() {
-  // faker.date.birthdate({ min: 18, max: 65, mode: 'age' })
-  return faker.helpers.weightedArrayElement([
-    {
-      weight: 26.85,
-      value: faker.date.birthdate({ min: 18, max: 24, mode: "age" }),
-      // value: faker.date.between({
-      //   from: setYear(-24),
-      //   to: setYear(-18),
-      // }),
-    },
-    {
-      weight: 32.56,
-      value: faker.date.birthdate({ min: 25, max: 34, mode: "age" }),
-      // value: faker.date.between({
-      //   from: setYear(-34),
-      //   to: setYear(-25),
-      // }),
-    },
-    {
-      weight: 35.44,
-      value: faker.date.birthdate({ min: 35, max: 44, mode: "age" }),
-      // value: faker.date.between({
-      //   from: setYear(-44),
-      //   to: setYear(-35),
-      // }),
-    },
-    {
-      weight: 10.9,
-      value: faker.date.birthdate({ min: 45, max: 54, mode: "age" }),
-      // value: faker.date.between({
-      //   from: setYear(-54),
-      //   to: setYear(-45),
-      // }),
-    },
-    {
-      weight: 7.03,
-      value: faker.date.birthdate({ min: 55, max: 64, mode: "age" }),
-      // value: faker.date.between({
-      //   from: setYear(-64),
-      //   to: setYear(-55),
-      // }),
-    },
-    {
-      weight: 4.36,
-      value: faker.date.birthdate({ min: 65, max: 90, mode: "age" }),
-      // value: faker.date.between({
-      //   from: setYear(-90),
-      //   to: setYear(-65),
-      // }),
-    },
-  ]);
-}
-
-export async function createUsers(quantity: number) {
+export async function createUser() {
   const dates = getPlayersDate();
-  const users: DB.UserCreation[] = Array.from({ length: quantity }, () => ({
+  return {
     username: faker.internet.userName(),
     password: faker.internet.password(),
     // Génère les genres en conformité avec les stats d'utilisation
+    // https://www.similarweb.com/website/boardgamearena.com/#traffic
     gender: faker.datatype.boolean({ probability: 0.35 }) ? "female" : "male",
-    birthday: getBirthday(),
+    // Génère des ages en conformité avec les stats d'utilisation
+    birthday: faker.helpers.weightedArrayElement([
+      {
+        weight: 26.85,
+        value: faker.date.birthdate({ min: 18, max: 24, mode: "age" }),
+      },
+      {
+        weight: 32.56,
+        value: faker.date.birthdate({ min: 25, max: 34, mode: "age" }),
+      },
+      {
+        weight: 35.44,
+        value: faker.date.birthdate({ min: 35, max: 44, mode: "age" }),
+      },
+      {
+        weight: 10.9,
+        value: faker.date.birthdate({ min: 45, max: 54, mode: "age" }),
+      },
+      {
+        weight: 7.03,
+        value: faker.date.birthdate({ min: 55, max: 64, mode: "age" }),
+      },
+      {
+        weight: 4.36,
+        value: faker.date.birthdate({ min: 65, max: 90, mode: "age" }),
+      },
+    ]),
     ...dates,
     userPremium: {
       create: getPremiumInfos(dates.createdAt, dates.lastConnection),
     },
-  }));
+  };
+}
 
-  await prisma.$transaction([
-    ...users.map((user) => prisma.user.create({ data: user })),
-  ]);
+export async function createUsers(quantity: number) {
+  const users: DB.UserCreation[] = await Promise.all(
+    Array.from({ length: quantity }, createUser)
+  );
+
+  await prisma.user.createManyIfNotExists(users);
 }
 
 export async function createGames() {
@@ -463,9 +436,7 @@ export async function createGames() {
     },
   ];
 
-  await prisma.$transaction([
-    ...games.map((game) => prisma.game.create({ data: game })),
-  ]);
+  await prisma.game.createManyIfNotExists(games);
 }
 
 export async function createGamescore(gameId: number, playedAt: Date) {
@@ -530,10 +501,4 @@ export async function createPlayedGames(quantity: number) {
       await Promise.all(playedGamesData)
     ).map((playedGame) => prisma.playedGame.create({ data: playedGame })),
   ]);
-}
-
-async function getModelIds(modelName: "game" | "user") {
-  const records = await prisma[modelName].getAllIds();
-  const recordIds = records.map((g) => g.id);
-  return recordIds;
 }
