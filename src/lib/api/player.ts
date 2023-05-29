@@ -1,6 +1,6 @@
 import { prisma } from "~/utils/prisma/db";
 
-export async function getCountPremium(isPremium = true) {
+export async function countPremiums(isPremium = true) {
   return prisma.user.count({
     where: {
       userPremium: {
@@ -14,7 +14,7 @@ export async function getCountPremium(isPremium = true) {
   });
 }
 
-export async function getCountConnexionFrom(from: Date, isPremium: boolean) {
+export async function countConnectionsFrom(from: Date, isPremium: boolean) {
   return prisma.user.count({
     where: {
       userPremium: {
@@ -31,7 +31,7 @@ export async function getCountConnexionFrom(from: Date, isPremium: boolean) {
   });
 }
 
-export async function getCountConnexionTo(to: Date, isPremium: boolean) {
+export async function countConnectionsTo(to: Date, isPremium: boolean) {
   console.log("getCountConnexionTo", { to, isPremium });
   return prisma.user.count({
     where: {
