@@ -485,25 +485,28 @@ export async function createGamescore(gameId: number, playedAt: Date) {
 
   const playersIds = faker.helpers.arrayElements(users, { min: 2, max: 8 });
 
-  return playersIds.map(
-    (user) =>
-      ({
-        score: faker.number.int(100),
-        user: {
-          connect: {
-            id: user.id,
-          },
-        },
-      })
-  );
+  return playersIds.map((user) => ({
+    score: faker.number.int(100),
+    user: {
+      connect: {
+        id: user.id,
+      },
+    },
+  }));
 }
 
 export async function createPlayedGame() {
-  const gameIds = await getModelIds("game");
-  const gameId = faker.helpers.arrayElement(gameIds);
+  const games = await prisma.game.findMany({
+    select: { id: true, popularity: true },
+  });
+  // Prend en compte la popularité d'un jeu
+  // 1 jeu populaire aura plus de chance d'être joué
+  const weightedGames = games.map((game) => ({
+    weight: game.popularity || 1,
+    value: game.id,
+  }));
+  const gameId = faker.helpers.weightedArrayElement(weightedGames);
   const playedAt = faker.date.past();
-
-  console.log({gameIds, gameId})
 
   return {
     game: {
@@ -520,30 +523,12 @@ export async function createPlayedGame() {
 }
 
 export async function createPlayedGames(quantity: number) {
-  const gameIds = await getModelIds("game");
-  const userIds = await getModelIds("user");
+  const playedGamesData = Array.from({ length: quantity }, createPlayedGame);
 
-  // Les données générées pourraient etre mieux
-  // Ici un historique ne prend en compte qu'un joueur par partie !
-  // TODO: Il faudrait mettre idUser en Int[]
-  // Si j'ai le temps
-  const playedGamesData = Array.from(
-    { length: quantity },
-    createPlayedGame
-  );
-
-  console.log(...playedGamesData)
-
-  // TODO: uncomment
-  // await prisma.$transaction([
-  //   ...playedGamesData.map((playedGame) =>
-  //     prisma.playedGame.create({ data: playedGame })
-  //   ),
-  // ]);
   await prisma.$transaction([
-    ...(await Promise.all(playedGamesData)).map((playedGame) =>
-      prisma.playedGame.create({ data: playedGame })
-    ),
+    ...(
+      await Promise.all(playedGamesData)
+    ).map((playedGame) => prisma.playedGame.create({ data: playedGame })),
   ]);
 }
 

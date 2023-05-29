@@ -43,9 +43,9 @@ export const prisma = new PrismaClient({
 });
 
 prisma.$on("query", (e) => {
-  console.log("Query: " + e.query);
-  console.log("Params: " + e.params);
-  console.log("Duration: " + e.duration + "ms");
+  const params = JSON.parse(e.params)
+  const query = e.query.replace(/(\?)/g, () => params.shift());
+  console.log("Query: " + query);
 });
 
 // generateData({ users: 100, histories: 5000 });
@@ -53,4 +53,4 @@ prisma.$on("query", (e) => {
 
 // await createGames();
 // await createUsers(1);
-await createPlayedGames(1)
+// await createPlayedGames(2000)
