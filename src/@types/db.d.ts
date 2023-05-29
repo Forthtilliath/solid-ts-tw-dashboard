@@ -4,8 +4,10 @@ declare global {
   namespace DB {
     // Schemas
     type ModalName = Lowercase<Prisma.ModelName>;
+
     type PlayedGame = Prisma.PlayedGameGetPayload<{}>;
     type Gamescore = Prisma.GamescoreGetPayload<true>;
+    type Game = Prisma.GameGetPayload<true>;
 
     // Creations
     type UserCreation = Prisma.UserCreateInput;
