@@ -24,3 +24,5 @@ gitignore
 Thumbs.db
 
 LINKS.md
+
+.env

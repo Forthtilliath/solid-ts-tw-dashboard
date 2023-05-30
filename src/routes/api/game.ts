@@ -16,8 +16,6 @@ export async function GET({ request }: APIEvent) {
       return json(popular);
     }
     case "most-played": {
-      // const played = (await game.mostPlayed(10, true)).reverse();
-      // return json(played);
       return json({
         free: (await game.mostPlayed(10, false)).reverse(),
         premium: (await game.mostPlayed(10, true)).reverse(),
