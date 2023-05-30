@@ -21,8 +21,14 @@ export default function ColumnChart(props: Props) {
     mergeDeep(
       structuredClone(defaultOptions),
       {
-        chart: { type: "bar" },
+        chart: { type: "bar", height: 500 },
         title: { text: props.title },
+        plotOptions: {
+          bar: {
+            distributed: true, // this line is mandatory
+            barHeight: "85%",
+          },
+        },
         colors: props.bgColors,
         xaxis: {
           categories: props.labels,
@@ -31,11 +37,16 @@ export default function ColumnChart(props: Props) {
         yaxis: {
           labels: { style: { colors: props.colors } },
         },
+        legend: {
+          show: false,
+        },
       },
       props.options
     )
   );
-  const [series] = createStore<ApexChartSeries>([{ name:"", data: props.data }]);
+  const [series] = createStore<ApexChartSeries>([
+    { name: "", data: props.data },
+  ]);
 
   return (
     <SolidApexCharts
