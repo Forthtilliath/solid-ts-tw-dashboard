@@ -15,10 +15,14 @@ export async function GET({ request }: APIEvent) {
       const popular = (await game.mostPopular(10)).reverse();
       return json(popular);
     }
-    // case "premiums": {
-    //   const premiums = await game.getGamePremium();
-    //   return json(premiums);
-    // }
+    case "most-played": {
+      // const played = (await game.mostPlayed(10, true)).reverse();
+      // return json(played);
+      return json({
+        free: (await game.mostPlayed(10, false)).reverse(),
+        premium: (await game.mostPlayed(10, true)).reverse(),
+      });
+    }
     default:
       return json({ error: "Not found" });
   }
