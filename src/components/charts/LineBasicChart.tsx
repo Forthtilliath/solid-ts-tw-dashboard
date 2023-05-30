@@ -39,8 +39,7 @@ export default function LineBasicChart(props: Props) {
           },
         },
         title: { text: props.title },
-        //   colors: props.strokeColors,
-          colors: ["#FF1654"],
+        colors: props.strokeColors,
         xaxis: {
           categories: props.labels,
           labels: { style: { colors: props.colors } },
