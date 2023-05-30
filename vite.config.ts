@@ -23,7 +23,7 @@ export default defineConfig({
   plugins: [
     solid({
       // adapter: netlify({edge:true})
-      adapter: vercel({ edge: true }),
+      adapter: vercel({}),
     }),
   ],
 });
