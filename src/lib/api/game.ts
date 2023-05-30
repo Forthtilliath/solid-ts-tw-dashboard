@@ -16,3 +16,42 @@ export async function getGamePremium() {
     {}
   );
 }
+
+export async function countPremiums(isPremium = true) {
+  return prisma.game.count({
+    where: {
+      premium: isPremium,
+    },
+  });
+}
+
+export async function mostPopular(numberOfResult: number) {
+  return await prisma.game.findMany({
+    take: numberOfResult,
+    orderBy: {
+      popularity: "desc",
+    },
+    select: {
+      name: true,
+      popularity: true,
+    },
+  });
+}
+
+export async function mostPlayed(numberOfResult: number, isPremium: boolean) {
+  return await prisma.game.findMany({
+    take: numberOfResult,
+    orderBy: {
+      playedList: {
+        _count: "desc",
+      },
+    },
+    select: {
+      name: true,
+      _count: true,
+    },
+    where: {
+      premium: isPremium,
+    },
+  });
+}

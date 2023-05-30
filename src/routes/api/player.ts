@@ -8,8 +8,8 @@ export async function GET({ request }: APIEvent) {
   switch (params) {
     case "premiums": {
       return json({
-        premium: await player.getCountPremium(true),
-        free: await player.getCountPremium(false),
+        free: await player.countPremiums(false),
+        premium: await player.countPremiums(true),
       });
     }
     // case "lastconnexions": {
@@ -19,16 +19,16 @@ export async function GET({ request }: APIEvent) {
 
     case "actives": {
       const premium = await Promise.all([
-        player.getCountConnexionFrom(setMonth(-1), true),
-        player.getCountConnexionFrom(setMonth(-3), true),
-        player.getCountConnexionFrom(setMonth(-6), true),
-        player.getCountConnexionFrom(setMonth(-12), true),
+        player.countConnectionsFrom(setMonth(-1), true),
+        player.countConnectionsFrom(setMonth(-3), true),
+        player.countConnectionsFrom(setMonth(-6), true),
+        player.countConnectionsFrom(setMonth(-12), true),
       ]);
       const free = await Promise.all([
-        player.getCountConnexionFrom(setMonth(-1), false),
-        player.getCountConnexionFrom(setMonth(-3), false),
-        player.getCountConnexionFrom(setMonth(-6), false),
-        player.getCountConnexionFrom(setMonth(-12), false),
+        player.countConnectionsFrom(setMonth(-1), false),
+        player.countConnectionsFrom(setMonth(-3), false),
+        player.countConnectionsFrom(setMonth(-6), false),
+        player.countConnectionsFrom(setMonth(-12), false),
       ]);
 
       return json([
@@ -45,16 +45,16 @@ export async function GET({ request }: APIEvent) {
 
     case "inactives": {
       const premium = await Promise.all([
-        player.getCountConnexionTo(setMonth(-1), true),
-        player.getCountConnexionTo(setMonth(-3), true),
-        player.getCountConnexionTo(setMonth(-6), true),
-        player.getCountConnexionTo(setMonth(-12), true),
+        player.countConnectionsTo(setMonth(-1), true),
+        player.countConnectionsTo(setMonth(-3), true),
+        player.countConnectionsTo(setMonth(-6), true),
+        player.countConnectionsTo(setMonth(-12), true),
       ]);
       const free = await Promise.all([
-        player.getCountConnexionTo(setMonth(-1), false),
-        player.getCountConnexionTo(setMonth(-3), false),
-        player.getCountConnexionTo(setMonth(-6), false),
-        player.getCountConnexionTo(setMonth(-12), false),
+        player.countConnectionsTo(setMonth(-1), false),
+        player.countConnectionsTo(setMonth(-3), false),
+        player.countConnectionsTo(setMonth(-6), false),
+        player.countConnectionsTo(setMonth(-12), false),
       ]);
 
       return json([
@@ -97,12 +97,12 @@ export async function GET({ request }: APIEvent) {
 
     case "age": {
       return json({
-        "18-24": Math.floor(26.85 * 500 / 100),
-        "25-34": Math.floor(32.56 * 500 / 100),
-        "35-44": Math.floor(18.30 * 500 / 100),
-        "45-54": Math.floor(10.90 * 500 / 100),
-        "55-64": Math.floor(7.03 * 500 / 100),
-        "65+": Math.floor(4.36 * 500 / 100),
+        "18-24": Math.floor((26.85 * 500) / 100),
+        "25-34": Math.floor((32.56 * 500) / 100),
+        "35-44": Math.floor((18.3 * 500) / 100),
+        "45-54": Math.floor((10.9 * 500) / 100),
+        "55-64": Math.floor((7.03 * 500) / 100),
+        "65+": Math.floor((4.36 * 500) / 100),
       });
     }
 

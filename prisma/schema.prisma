@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["clientExtensions"]
 }
 
 datasource db {
@@ -11,31 +12,52 @@ datasource db {
 }
 
 model Game {
-  id         Int       @id @default(autoincrement())
-  name       String
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
   premium    Boolean
   image      String
   popularity Int
-  minplayers Int
-  history    History[]
+  playedList PlayedGame[]
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  username     String    @unique
-  password     String
-  premium      Boolean   @default(false)
-  endPremiumAt DateTime?
-  history      History[]
+  id             Int           @id @default(autoincrement())
+  username       String        @unique
+  password       String
+  gender         String
+  birthday       DateTime
+  createdAt      DateTime      @default(now())
+  lastConnection DateTime
+  scoreList      Gamescore[]
+  userPremium    UserPremium[]
 }
 
-model History {
-  id       Int      @id @default(autoincrement())
-  idGame   Int
-  idUser   Int
-  game     Game     @relation(fields: [idGame], references: [id])
-  user     User     @relation(fields: [idUser], references: [id])
-  playedAt DateTime
-  score    Int
-  duration Int
+model UserPremium {
+  id                Int      @id @default(autoincrement())
+  subscriptionAt    DateTime @default(now())
+  duration          Int
+  subscriptionEndAt DateTime
+  user              User     @relation(fields: [idUser], references: [id], onDelete: Cascade)
+  idUser            Int
+}
+
+model PlayedGame {
+  id        Int         @id @default(autoincrement())
+  playedAt  DateTime
+  duration  Int
+  game      Game        @relation(fields: [idGame], references: [id])
+  idGame    Int
+  scoreList Gamescore[]
+
+  @@map("Gameplay")
+}
+
+model Gamescore {
+  playedgame   PlayedGame @relation(fields: [idPlayedGame], references: [id])
+  idPlayedGame Int
+  user         User       @relation(fields: [idUser], references: [id], onDelete: NoAction)
+  idUser       Int
+  score        Int
+
+  @@unique([idPlayedGame, idUser])
 }

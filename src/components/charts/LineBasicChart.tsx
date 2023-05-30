@@ -1,7 +1,7 @@
 import { createStore } from "solid-js/store";
 import { SolidApexCharts } from "solid-apexcharts";
-import { defaultOptions } from "./chart.options";
 import { mergeDeep } from "~/utils/methodes/object";
+import { defaultOptions } from "./chart.options";
 
 type ApexChartProps = Parameters<typeof SolidApexCharts>[0];
 type ApexChartOptions = ApexChartProps["options"];
@@ -9,29 +9,37 @@ type ApexChartSeries = ApexChartProps["series"];
 
 type Props = {
   title: string;
-  subTitle?: string;
-  labels: string[];
-  data: Chart.ColumnData;
-  colors?: string[] | string;
+  labels?: string[];
+  data: number[];
+  colors?: string | string[];
   bgColors?: string[];
   options?: ApexChartOptions;
-  stackType?: "normal" | "100%";
+  strokeColors?: string[];
 };
 
-export default function ColumnStackedChart(props: Props) {
+export default function LineBasicChart(props: Props) {
   const [options] = createStore(
     mergeDeep(
       structuredClone(defaultOptions),
       {
         chart: {
-          type: "bar",
-          stacked: true,
-          stackType: props.stackType,
+          type: "line",
+          height: 500,
+          zoom: {
+            enabled: false,
+          },
+        },
+        stroke: {
+          curve: "straight",
+        },
+        grid: {
+          row: {
+            colors: props.bgColors,
+            opacity: 0.5,
+          },
         },
         title: { text: props.title },
-        subtitle: { text: props.subTitle },
-        colors: props.bgColors,
-
+        colors: props.strokeColors,
         xaxis: {
           categories: props.labels,
           labels: { style: { colors: props.colors } },
@@ -39,21 +47,18 @@ export default function ColumnStackedChart(props: Props) {
         yaxis: {
           labels: { style: { colors: props.colors } },
         },
-        legend: {
-          labels: { colors: props.colors },
-        },
       },
       props.options
     )
   );
-  const [series] = createStore<ApexChartSeries>(props.data);
-
-  console.log({series})
+  const [series] = createStore<ApexChartSeries>([
+    { name: "", data: props.data },
+  ]);
 
   return (
     <SolidApexCharts
       width="100%"
-      type="bar"
+      type="line"
       options={options}
       series={series}
     />

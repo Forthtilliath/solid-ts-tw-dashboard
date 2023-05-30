@@ -31,7 +31,7 @@ export function DashboardCard(props: Props) {
           </div>
           <div class="relative w-auto pl-4 flex-initial">
             <div
-              class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-transparent"
+              class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full"
               classList={{ [props.bgIcon as string]: Boolean(props.bgIcon) }}
             >
               <Switch>

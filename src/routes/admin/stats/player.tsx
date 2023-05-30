@@ -73,6 +73,8 @@ export default function PlayerStats() {
             labels={Object.keys(age())}
             data={Object.values(age())}
             colors={"white"}
+            // bgColors={["#111827"]}
+            options={{ plotOptions: { bar: { horizontal: true } } }}
           />
         )}
       </Show>
