@@ -12,7 +12,7 @@ datasource db {
 
 model Game {
   id         Int       @id @default(autoincrement())
-  name       String    @unique
+  name       String
   premium    Boolean
   image      String
   popularity Int
@@ -21,15 +21,12 @@ model Game {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  username      String    @unique
-  password      String
-  gender        String
-  premium       Boolean   @default(false)
-  endPremiumAt  DateTime?
-  createdAt     DateTime
-  lastConnexion DateTime
-  history       History[]
+  id           Int       @id @default(autoincrement())
+  username     String    @unique
+  password     String
+  premium      Boolean   @default(false)
+  endPremiumAt DateTime?
+  history      History[]
 }
 
 model History {
