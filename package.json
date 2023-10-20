@@ -21,7 +21,7 @@
   "dependencies": {
     "@prisma/client": "^5.4.2",
     "@solidjs/meta": "^0.28.5",
-    "@solidjs/router": "^0.8.2",
+    "@solidjs/router": "^0.8.3",
     "deepmerge": "^4.3.1",
     "prisma": "^5.4.2",
     "solid-apexcharts": "^0.2.4",
