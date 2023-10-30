@@ -24,7 +24,7 @@
     "@solidjs/router": "^0.8.3",
     "deepmerge": "^4.3.1",
     "prisma": "^5.4.2",
-    "solid-apexcharts": "^0.2.4",
+    "solid-apexcharts": "^0.3.2",
     "solid-js": "^1.8.3",
     "solid-start": "^0.2.26",
     "solid-start-vercel": "^0.2.26",

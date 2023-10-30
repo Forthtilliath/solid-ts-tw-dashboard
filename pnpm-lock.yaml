@@ -21,8 +21,8 @@ dependencies:
     specifier: ^5.4.2
     version: 5.4.2
   solid-apexcharts:
-    specifier: ^0.2.4
-    version: 0.2.4(apexcharts@3.40.0)(solid-js@1.8.3)
+    specifier: ^0.3.2
+    version: 0.3.2(apexcharts@3.40.0)(solid-js@1.8.3)
   solid-js:
     specifier: ^1.8.3
     version: 1.8.3
@@ -3339,11 +3339,11 @@ packages:
       mrmime: 1.0.1
       totalist: 3.0.1
 
-  /solid-apexcharts@0.2.4(apexcharts@3.40.0)(solid-js@1.8.3):
-    resolution: {integrity: sha512-8SJ48UrCSZOE2HzF9a3LKbUccnHxhCCTDgIMciWUPdIBxW7GpalRh/HcJapa4Lc6khP1scKhS3M7iKc+uUU7yg==}
+  /solid-apexcharts@0.3.2(apexcharts@3.40.0)(solid-js@1.8.3):
+    resolution: {integrity: sha512-4U80dk2e/YEghD903aitBrO0l5WjUv/IhRI6Pp8mfJNT6JPkYG4HTMjBrI+XHRU8uJICJl9ZwLtkvFZnKd2Shw==}
     peerDependencies:
-      apexcharts: '>=3.36.0'
-      solid-js: '>=1.4.0'
+      apexcharts: ^3.40.0
+      solid-js: ^1.6.0
     dependencies:
       apexcharts: 3.40.0
       defu: 6.1.2
