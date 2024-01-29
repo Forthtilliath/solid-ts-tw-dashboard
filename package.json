@@ -25,7 +25,7 @@
     "deepmerge": "^4.3.1",
     "prisma": "^5.4.2",
     "solid-apexcharts": "^0.3.2",
-    "solid-js": "^1.8.3",
+    "solid-js": "^1.8.12",
     "solid-start": "^0.2.26",
     "solid-start-vercel": "^0.3.8",
     "undici": "^5.26.2"
